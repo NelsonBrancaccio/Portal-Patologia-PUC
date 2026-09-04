@@ -14,6 +14,11 @@ const topicos = (await getCollection('topicos')).sort(
     .stat { font-family: var(--sans); }
     .stat .n { font-size: 24px; font-weight: 600; display: block; }
     .stat .l { font-size: 12px; color: var(--ink-soft); }
+    .cover {
+      aspect-ratio: 16/4.5; background: var(--accent-soft); border: 1px solid #C9D8D5;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 30px;
+    }
+    .cover figcaption { display: none; }
     .section { padding: 30px 0; border-top: 1px solid var(--line); }
     .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
     .section-head h2 { font-family: var(--sans); font-weight: 600; font-size: 14.5px; margin: 0; }
@@ -26,6 +31,19 @@ const topicos = (await getCollection('topicos')).sort(
     .topic-date { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
     .empty { font-size: 15px; color: var(--ink-soft); }
   </style>
+
+  <!-- Capa do site — ilustrativa por enquanto. Para trocar por uma foto real,
+       coloque o arquivo em public/imagens/capa.jpg e troque este bloco <div class="cover">
+       por: <img src="/imagens/capa.jpg" alt="" style="width:100%;aspect-ratio:16/4.5;object-fit:cover;" /> -->
+  <div class="cover">
+    <svg width="120" height="70" viewBox="0 0 120 70" fill="none">
+      <ellipse cx="60" cy="35" rx="52" ry="27" stroke="#2E5C57" stroke-width="1.3"/>
+      <circle cx="42" cy="26" r="6" stroke="#2E5C57" stroke-width="1.1"/>
+      <circle cx="72" cy="42" r="8" stroke="#2E5C57" stroke-width="1.1"/>
+      <circle cx="80" cy="20" r="4" stroke="#2E5C57" stroke-width="1.1"/>
+      <circle cx="36" cy="48" r="4.5" stroke="#2E5C57" stroke-width="1.1"/>
+    </svg>
+  </div>
 
   <div class="hero">
     <h1>Patologia organizada por sistema</h1>

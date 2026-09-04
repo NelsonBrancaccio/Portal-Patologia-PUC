@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const [entry] = await getCollection('institucional');
+const { Content } = await entry.render();
+---
+<Layout title={entry.data.titulo}>
+  <style>
+    .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 24px; }
+    .about-body :global(h2) {
+      font-family: var(--sans); font-weight: 600; font-size: 19px; margin: 30px 0 12px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
+    }
+    .about-body :global(p) { font-size: 16px; line-height: 1.7; margin: 14px 0; max-width: 70ch; }
+    .about-body :global(hr) { border: none; border-top: 1px solid var(--line); margin: 30px 0 16px; }
+    .about-body :global(em) { font-size: 13px; color: var(--ink-soft); }
+    .about-body :global(a) { color: var(--accent); }
+  </style>
+  <h1 class="page-h1">{entry.data.titulo}</h1>
+  <div class="about-body"><Content /></div>
+</Layout>

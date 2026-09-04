@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const todos = await getCollection('professores');
+const ativos = todos.filter((p) => p.data.ativo);
+const historicos = todos.filter((p) => !p.data.ativo);
+
+async function renderAll(entries: typeof todos) {
+  return Promise.all(
+    entries.map(async (p) => {
+      const { Content } = await p.render();
+      return { p, Content };
+    })
+  );
+}
+
+const ativosR = await renderAll(ativos);
+const historicosR = await renderAll(historicos);
+---
+<Layout title="Professores">
+  <style>
+    .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 10px; }
+    .page-sub { font-size: 15.5px; color: var(--ink-soft); max-width: 60ch; margin: 0 0 28px; }
+    .section-h2 {
+      font-family: var(--sans); font-weight: 600; font-size: 18px; margin: 32px 0 16px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
+    }
+    .prof-card { border: 1px solid var(--line); background: #fff; padding: 20px 24px; margin-bottom: 16px; }
+    .prof-card .name { font-family: var(--sans); font-weight: 600; font-size: 16.5px; margin: 0 0 3px; }
+    .prof-card .period { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; }
+    .prof-card .bio { font-size: 15px; line-height: 1.6; }
+    .prof-card .bio :global(p) { margin: 0; }
+    .contact-row { margin-top: 12px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .contact-row a { font-family: var(--sans); font-size: 13px; color: var(--accent); text-decoration: none; }
+    .empty { font-size: 15px; color: var(--ink-soft); }
+  </style>
+
+  <h1 class="page-h1">Professores de Patologia</h1>
+  <p class="page-sub">Quem já passou pela disciplina de Patologia na PUC-SP Sorocaba — e como falar com quem ainda está na ativa.</p>
+
+  <h2 class="section-h2">Em atividade</h2>
+  {ativosR.length === 0 ? (
+    <p class="empty">Nenhum professor cadastrado ainda.</p>
+  ) : (
+    ativosR.map(({ p, Content }) => (
+      <div class="prof-card">
+        <p class="name">{p.data.nome}</p>
+        {p.data.periodo && <p class="period">{p.data.periodo}</p>}
+        <div class="bio"><Content /></div>
+        <div class="contact-row">
+          {p.data.contato_email && <a href={`mailto:${p.data.contato_email}`}>{p.data.contato_email}</a>}
+          {p.data.contato_telefone && <span>{p.data.contato_telefone}</span>}
+        </div>
+      </div>
+    ))
+  )}
+
+  <h2 class="section-h2">Já lecionaram</h2>
+  {historicosR.length === 0 ? (
+    <p class="empty">Nenhum professor cadastrado ainda.</p>
+  ) : (
+    historicosR.map(({ p, Content }) => (
+      <div class="prof-card">
+        <p class="name">{p.data.nome}</p>
+        {p.data.periodo && <p class="period">{p.data.periodo}</p>}
+        <div class="bio"><Content /></div>
+      </div>
+    ))
+  )}
+</Layout>

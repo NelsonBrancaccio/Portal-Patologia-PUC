@@ -36,3 +36,25 @@ collections:
         name: "body"
         widget: "markdown"
         hint: "Use ## para os títulos das 5 seções: Definição / conceito, Quadro clínico, Diagnóstico, Relevância prática, Referências. Insira imagens de lâmina direto no texto pelo botão de imagem."
+
+  - name: "professores"
+    label: "Professores"
+    folder: "src/content/professores"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "Está na ativa?", name: "ativo", widget: "boolean", default: false }
+      - { label: "Período (ex: desde 2010, ou 1998–2015)", name: "periodo", widget: "string", required: false }
+      - { label: "E-mail de contato (só se estiver na ativa)", name: "contato_email", widget: "string", required: false }
+      - { label: "Telefone de contato (só se estiver na ativa)", name: "contato_telefone", widget: "string", required: false }
+      - { label: "História breve", name: "body", widget: "markdown" }
+
+  - name: "institucional"
+    label: "Página Sobre"
+    folder: "src/content/institucional"
+    create: false
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
