@@ -1,8 +1,8 @@
 ---
-titulo: "Adenocarcinoma Colorretal"
-area: "Trato Gastrointestinal"
+titulo: Adenocarcinoma Colorretal
+area: Trato Gastrointestinal
 atualizado: 2026-09-02
-imagem_principal: ""
+imagem_principal: /imagens/portal-patologia-puc-adenocarcinoma-colorretal-ilustracao.jpg
 ---
 
 ## Definição / conceito
