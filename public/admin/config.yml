@@ -1,0 +1,38 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/imagens"
+public_folder: "/imagens"
+
+collections:
+  - name: "topicos"
+    label: "Tópicos"
+    folder: "src/content/topicos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - label: "Área"
+        name: "area"
+        widget: "select"
+        options:
+          - "Patologia Geral"
+          - "Trato Gastrointestinal"
+          - "Hepatobiliar e Pâncreas"
+          - "Mama"
+          - "Ginecológica"
+          - "Pulmonar"
+          - "Renal e Trato Urinário"
+          - "Óssea e Partes Moles"
+          - "Sistema Nervoso"
+          - "Hematológica e Linfonodal"
+          - "Endócrina"
+          - "Pele"
+          - "Citopatologia"
+      - { label: "Atualizado em", name: "atualizado", widget: "datetime" }
+      - { label: "Imagem principal", name: "imagem_principal", widget: "image", required: false }
+      - label: "Conteúdo"
+        name: "body"
+        widget: "markdown"
+        hint: "Use ## para os títulos das 5 seções: Definição / conceito, Quadro clínico, Diagnóstico, Relevância prática, Referências. Insira imagens de lâmina direto no texto pelo botão de imagem."

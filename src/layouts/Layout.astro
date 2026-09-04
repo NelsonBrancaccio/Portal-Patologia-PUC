@@ -1,0 +1,113 @@
+---
+import { AREAS } from '../content/config';
+
+interface Props {
+  title: string;
+  activeArea?: string;
+}
+
+const { title, activeArea } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Portal Patologia PUC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --navy: #172233;
+      --navy-2: #202D42;
+      --gold: #BE9C4C;
+      --paper: #FAF8F2;
+      --paper-dim: #F1EEE3;
+      --ink: #211F1A;
+      --ink-soft: #625D50;
+      --line: #E2DDCC;
+      --accent: #2E5C57;
+      --accent-soft: #DEE9E6;
+      --alert: #7B2E22;
+      --alert-soft: #F1E1DD;
+      --serif: "Source Serif 4", Georgia, serif;
+      --sans: "IBM Plex Sans", -apple-system, sans-serif;
+      --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); }
+
+    .site-header { background: var(--navy); padding: 18px 36px; display: flex; align-items: center; gap: 28px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-box { width: 34px; height: 34px; border: 1px solid var(--gold); color: var(--gold); font-family: var(--sans); font-weight: 600; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .brand-text .name { font-family: var(--sans); font-weight: 600; font-size: 16.5px; color: #F3F1E8; line-height: 1.2; }
+    .brand-text .sub { font-family: var(--sans); font-size: 11.5px; color: #9CA3AE; margin-top: 1px; }
+    .hsearch { flex: 1; max-width: 420px; font-family: var(--serif); font-size: 13.5px; color: #C7CAD1; background: var(--navy-2); border: 1px solid #33415A; padding: 8px 14px; }
+    .hnav { margin-left: auto; display: flex; gap: 26px; font-family: var(--sans); font-size: 13px; }
+    .hnav a { color: #D8CFA6; text-decoration: none; }
+
+    .shell { display: grid; grid-template-columns: 220px 1fr; max-width: 1160px; margin: 0 auto; }
+    .sidebar { border-right: 1px solid var(--line); padding: 30px 22px; background: var(--paper-dim); }
+    .sidebar .label { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-soft); margin-bottom: 14px; }
+    .sidebar ul { list-style: none; margin: 0; padding: 0; }
+    .sidebar li { margin-bottom: 3px; }
+    .sidebar a { display: block; font-family: var(--sans); font-size: 13.5px; font-weight: 600; color: var(--ink); text-decoration: none; padding: 7px 8px 7px 10px; border-left: 2px solid transparent; }
+    .sidebar a .arrow { color: var(--ink-soft); margin-right: 5px; font-weight: 400; }
+    .sidebar li.active a { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+
+    .main { padding: 34px 44px 40px; }
+
+    .figure { background: var(--accent-soft); border: 1px solid #C9D8D5; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 26px 16px 16px; margin: 20px 0; }
+    .figure figcaption { font-family: var(--sans); font-size: 11.5px; font-style: italic; color: var(--ink-soft); margin-top: 12px; text-align: center; max-width: 46ch; }
+    .figure.hero-fig { aspect-ratio: 16/5; }
+
+    .site-footer { padding: 22px 44px 30px; font-family: var(--sans); font-size: 12px; color: var(--ink-soft); display: flex; justify-content: space-between; border-top: 1px solid var(--line); max-width: 1160px; margin: 0 auto; }
+
+    @media (max-width: 760px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+      .main, .site-footer { padding-left: 22px; padding-right: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <div class="logo-box">PP</div>
+      <div class="brand-text">
+        <div class="name">Portal Patologia PUC</div>
+        <div class="sub">PUC-SP Sorocaba</div>
+      </div>
+    </a>
+    <input class="hsearch" placeholder="Buscar tópico, ex: adenocarcinoma colorretal..." disabled />
+    <nav class="hnav">
+      <a href="/">Tópicos</a>
+      <a href="/">Sobre</a>
+      <a href="/admin/">Para autores</a>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="label">ÁREAS</div>
+      <ul>
+        {AREAS.map((area) => (
+          <li class={area === activeArea ? 'active' : ''}>
+            <a href="/"><span class="arrow">›</span>{area}</a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <main class="main">
+      <slot />
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <span>Portal Patologia PUC — conteúdo de referência educacional, não substitui laudo profissional</span>
+    <span>PUC-SP Sorocaba</span>
+  </footer>
+</body>
+</html>
