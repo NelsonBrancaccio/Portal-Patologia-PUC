@@ -1,10 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
 const topicos = (await getCollection('topicos')).sort(
   (a, b) => b.data.atualizado.valueOf() - a.data.atualizado.valueOf()
 );
+const config = await getEntry('configuracoes', 'site');
+const imagemCapa = config?.data?.imagem_capa;
 ---
 <Layout title="Início">
   <style>
@@ -36,17 +38,18 @@ const topicos = (await getCollection('topicos')).sort(
     .empty { font-size: 15px; color: var(--ink-soft); }
   </style>
 
-  <!-- Capa do site — ilustrativa por enquanto. Para trocar por uma foto real,
-       coloque o arquivo em public/imagens/capa.jpg e troque este bloco <div class="cover">
-       por: <img src="/imagens/capa.jpg" alt="" style="width:100%;aspect-ratio:16/4.5;object-fit:cover;" /> -->
   <div class="cover">
-    <svg width="120" height="70" viewBox="0 0 120 70" fill="none">
-      <ellipse cx="60" cy="35" rx="52" ry="27" stroke="#2E5C57" stroke-width="1.3"/>
-      <circle cx="42" cy="26" r="6" stroke="#2E5C57" stroke-width="1.1"/>
-      <circle cx="72" cy="42" r="8" stroke="#2E5C57" stroke-width="1.1"/>
-      <circle cx="80" cy="20" r="4" stroke="#2E5C57" stroke-width="1.1"/>
-      <circle cx="36" cy="48" r="4.5" stroke="#2E5C57" stroke-width="1.1"/>
-    </svg>
+    {imagemCapa ? (
+      <img src={imagemCapa} alt="Ilustração de abertura — Portal Patologia PUC" />
+    ) : (
+      <svg width="120" height="70" viewBox="0 0 120 70" fill="none">
+        <ellipse cx="60" cy="35" rx="52" ry="27" stroke="#2E5C57" stroke-width="1.3"/>
+        <circle cx="42" cy="26" r="6" stroke="#2E5C57" stroke-width="1.1"/>
+        <circle cx="72" cy="42" r="8" stroke="#2E5C57" stroke-width="1.1"/>
+        <circle cx="80" cy="20" r="4" stroke="#2E5C57" stroke-width="1.1"/>
+        <circle cx="36" cy="48" r="4.5" stroke="#2E5C57" stroke-width="1.1"/>
+      </svg>
+    )}
   </div>
 
   <div class="hero">

@@ -58,3 +58,12 @@ collections:
     fields:
       - { label: "Título", name: "titulo", widget: "string" }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "configuracoes"
+    label: "Capa do Site"
+    files:
+      - name: "site"
+        label: "Capa da Página Inicial"
+        file: "src/content/configuracoes/site.json"
+        fields:
+          - { label: "Imagem de capa", name: "imagem_capa", widget: "image", required: false, hint: "Aparece no topo da página inicial. Se vazio, mostra o desenho ilustrativo padrão." }

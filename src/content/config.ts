@@ -45,4 +45,11 @@ const institucional = defineCollection({
   })
 });
 
-export const collections = { topicos, professores, institucional };
+const configuracoes = defineCollection({
+  type: 'data',
+  schema: z.object({
+    imagem_capa: z.string().optional()
+  })
+});
+
+export const collections = { topicos, professores, institucional, configuracoes };
