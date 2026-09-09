@@ -8,6 +8,13 @@ tags:
   - colorretal
 intro: teste teste teste
 imagem_principal: /imagens/portal-patologia-puc-capa-ilustracao.png
+imagens_reais:
+  - arquivo: /imagens/portal-patologia-puc-capa-ilustracao.png.png
+    titulo: legenda da imagem
+    observacao: observação sobre a imagem
+  - arquivo: /imagens/portal-patologia-puc-adenocarcinoma-colorretal-ilustracao.jpg
+    observacao: observação sobre a imagem
+    titulo: legenda da imagem
 ---
 
 ## Definição / conceito
