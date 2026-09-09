@@ -1,23 +1,8 @@
 ---
-titulo: Adenocarcinoma Colorretal
-area: Trato Gastrointestinal
+titulo: "Adenocarcinoma Colorretal"
+area: "Trato Gastrointestinal"
 atualizado: 2026-09-02
-imagem_principal: /imagens/1.png
-imagens_reais:
-  - arquivo: /imagens/2.png
-    titulo: legenda 1
-    observacao: |-
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-  - arquivo: /imagens/2.png
-    observacao: |-
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-      texto 1 texto 1 texto 1 texto 1 texto 1 texto 1 
-    titulo: legenda 2
+imagem_principal: ""
 ---
 
 ## Definição / conceito
