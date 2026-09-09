@@ -1,81 +1,46 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-const topicos = (await getCollection('topicos')).sort(
-  (a, b) => b.data.atualizado.valueOf() - a.data.atualizado.valueOf()
-);
 const config = await getEntry('configuracoes', 'site');
-const imagemCapa = config?.data?.imagem_capa;
+const data = config?.data;
 ---
 <Layout title="Início">
   <style>
-    .hero h1 { font-family: var(--sans); font-weight: 600; font-size: 32px; line-height: 1.22; letter-spacing: -0.01em; max-width: 15ch; margin: 4px 0 16px; }
-    .hero p { font-size: 16px; line-height: 1.6; color: var(--ink-soft); max-width: 48ch; margin: 0 0 24px; }
-    .stat-row { display: flex; gap: 40px; margin-bottom: 30px; }
-    .stat { font-family: var(--sans); }
-    .stat .n { font-size: 24px; font-weight: 600; display: block; }
-    .stat .l { font-size: 12px; color: var(--ink-soft); }
-    .cover {
-      aspect-ratio: 1/1; background: var(--accent-soft); border: 1px solid #C9D8D5;
-      display: flex; align-items: center; justify-content: center; margin-bottom: 30px; overflow: hidden;
-    }
-    @media (min-width: 760px) {
-      .cover { aspect-ratio: 16/4.5; }
-    }
-    .cover img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .cover figcaption { display: none; }
-    .section { padding: 30px 0; border-top: 1px solid var(--line); }
-    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
-    .section-head h2 { font-family: var(--sans); font-weight: 600; font-size: 14.5px; margin: 0; }
-    .topic-list { list-style: none; margin: 0; padding: 0; }
-    .topic-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--paper-dim); align-items: center; }
-    .topic-row:last-child { border-bottom: none; }
-    .topic-main .tag { font-family: var(--sans); font-size: 11.5px; color: var(--accent); font-weight: 600; margin-bottom: 4px; display: block; }
-    .topic-main .title { font-size: 17px; font-weight: 600; margin: 0; }
-    .topic-main .title a { color: var(--ink); text-decoration: none; }
-    .topic-date { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
-    .empty { font-size: 15px; color: var(--ink-soft); }
+    .inst-hero { aspect-ratio: 4/3; background: var(--accent-soft); border: 1px solid #C9D8D5; overflow: hidden; margin: -6px -6px 0; }
+    @media (min-width: 760px) { .inst-hero { aspect-ratio: 16/6; } }
+    .inst-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .inst-hero-cap { font-family: var(--sans); font-size: 11.5px; font-style: italic; color: var(--ink-soft); margin: 8px 0 28px; }
+    .inst-body h1 { font-family: var(--sans); font-weight: 600; font-size: 30px; margin: 4px 0 16px; max-width: 20ch; }
+    .inst-body p { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 66ch; margin: 0 0 14px; }
+    .cta-row { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+    .cta { font-family: var(--sans); font-size: 13px; font-weight: 600; color: #fff; background: var(--accent); padding: 10px 18px; text-decoration: none; }
+    .cta.ghost { color: var(--accent); background: transparent; border: 1px solid var(--accent); }
   </style>
 
-  <div class="cover">
-    {imagemCapa ? (
-      <img src={imagemCapa} alt="Ilustração de abertura — Portal Patologia PUC" />
-    ) : (
-      <svg width="120" height="70" viewBox="0 0 120 70" fill="none">
-        <ellipse cx="60" cy="35" rx="52" ry="27" stroke="#2E5C57" stroke-width="1.3"/>
-        <circle cx="42" cy="26" r="6" stroke="#2E5C57" stroke-width="1.1"/>
-        <circle cx="72" cy="42" r="8" stroke="#2E5C57" stroke-width="1.1"/>
-        <circle cx="80" cy="20" r="4" stroke="#2E5C57" stroke-width="1.1"/>
-        <circle cx="36" cy="48" r="4.5" stroke="#2E5C57" stroke-width="1.1"/>
-      </svg>
-    )}
-  </div>
+  {data?.home_imagem && (
+    <>
+      <div class="inst-hero"><img src={data.home_imagem} alt={data.home_imagem_legenda || 'Imagem institucional — Portal Patologia PUC'} /></div>
+      {data.home_imagem_legenda && <p class="inst-hero-cap">{data.home_imagem_legenda}</p>}
+    </>
+  )}
 
-  <div class="hero">
-    <h1>Patologia organizada por sistema</h1>
-    <p>Achados macroscópicos, microscópicos e correlação clínica — com imagens ilustrativas e de lâmina, para consulta durante o estudo e a prática do laudo.</p>
-    <div class="stat-row">
-      <div class="stat"><span class="n">{topicos.length}</span><span class="l">tópicos publicados</span></div>
+  <div class="inst-body">
+    <h1>{data?.home_titulo || 'Bem-vindo ao Portal Patologia PUC'}</h1>
+    {data?.home_texto ? (
+      <p>{data.home_texto}</p>
+    ) : (
+      <>
+        <p>Um espaço de referência em Patologia, mantido pela comunidade acadêmica da PUC-SP Sorocaba —
+        reunindo achados macroscópicos, microscópicos e correlação clínica organizados por sistema, para
+        consulta durante a graduação e a prática do laudo.</p>
+        <p>Aqui você encontra tópicos revisados por professores da disciplina, imagens ilustrativas e de
+        lâmina, e um espaço dedicado à história de quem já passou pela Patologia na faculdade.</p>
+      </>
+    )}
+    <div class="cta-row">
+      <a class="cta" href="/topicos/">Ver tópicos</a>
+      <a class="cta ghost" href="/professores/">Conhecer os professores</a>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head"><h2>Tópicos recentes</h2></div>
-    {topicos.length === 0 ? (
-      <p class="empty">Nenhum tópico publicado ainda.</p>
-    ) : (
-      <ul class="topic-list">
-        {topicos.map((t) => (
-          <li class="topic-row">
-            <div class="topic-main">
-              <span class="tag">{t.data.area}</span>
-              <p class="title"><a href={`/topicos/${t.slug}/`}>{t.data.titulo}</a></p>
-            </div>
-            <span class="topic-date">{t.data.atualizado.toLocaleDateString('pt-BR')}</span>
-          </li>
-        ))}
-      </ul>
-    )}
   </div>
 </Layout>

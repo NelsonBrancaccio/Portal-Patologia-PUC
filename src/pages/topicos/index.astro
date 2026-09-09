@@ -1,0 +1,74 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const topicos = (await getCollection('topicos')).sort(
+  (a, b) => b.data.atualizado.valueOf() - a.data.atualizado.valueOf()
+);
+const config = await getEntry('configuracoes', 'site');
+const data = config?.data;
+---
+<Layout title="Tópicos">
+  <style>
+    .mini-hero { aspect-ratio: 4/3; background: var(--accent-soft); border: 1px solid #C9D8D5; overflow: hidden; margin: -6px -6px 0; }
+    @media (min-width: 760px) { .mini-hero { aspect-ratio: 16/5; } }
+    .mini-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .mini-hero-cap { font-family: var(--sans); font-size: 11.5px; font-style: italic; color: var(--ink-soft); margin: 8px 0 24px; }
+    .intro { padding-top: 6px; }
+    .intro h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 0 0 12px; }
+    .intro p { font-size: 16px; line-height: 1.65; color: var(--ink-soft); max-width: 68ch; margin: 0 0 10px; }
+    .stat-row { display: flex; gap: 40px; margin: 18px 0 30px; }
+    .stat { font-family: var(--sans); }
+    .stat .n { font-size: 24px; font-weight: 600; display: block; }
+    .stat .l { font-size: 12px; color: var(--ink-soft); }
+    .section { padding: 30px 0; border-top: 1px solid var(--line); }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+    .section-head h2 { font-family: var(--sans); font-weight: 600; font-size: 14.5px; margin: 0; }
+    .topic-list { list-style: none; margin: 0; padding: 0; }
+    .topic-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--paper-dim); align-items: center; }
+    .topic-row:last-child { border-bottom: none; }
+    .topic-main .tag { font-family: var(--sans); font-size: 11.5px; color: var(--accent); font-weight: 600; margin-bottom: 4px; display: block; }
+    .topic-main .title { font-size: 17px; font-weight: 600; margin: 0; }
+    .topic-main .title a { color: var(--ink); text-decoration: none; }
+    .topic-date { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+    .empty { font-size: 15px; color: var(--ink-soft); }
+  </style>
+
+  {data?.topicos_imagem && (
+    <>
+      <div class="mini-hero"><img src={data.topicos_imagem} alt={data.topicos_imagem_legenda || 'Imagem institucional'} /></div>
+      {data.topicos_imagem_legenda && <p class="mini-hero-cap">{data.topicos_imagem_legenda}</p>}
+    </>
+  )}
+
+  <div class="intro">
+    <h1>Tópicos por área de Patologia</h1>
+    {data?.topicos_texto ? (
+      <p>{data.topicos_texto}</p>
+    ) : (
+      <p>Navegue pelas áreas no menu ao lado ou veja abaixo os tópicos adicionados mais recentemente.</p>
+    )}
+    <div class="stat-row">
+      <div class="stat"><span class="n">{topicos.length}</span><span class="l">tópicos publicados</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>Tópicos recentes</h2></div>
+    {topicos.length === 0 ? (
+      <p class="empty">Nenhum tópico publicado ainda.</p>
+    ) : (
+      <ul class="topic-list">
+        {topicos.map((t) => (
+          <li class="topic-row">
+            <div class="topic-main">
+              <span class="tag">{t.data.area}</span>
+              <p class="title"><a href={`/topicos/${t.slug}/`}>{t.data.titulo}</a></p>
+            </div>
+            <span class="topic-date">{t.data.atualizado.toLocaleDateString('pt-BR')}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</Layout>

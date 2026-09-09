@@ -17,25 +17,44 @@ collections:
         name: "area"
         widget: "select"
         options:
-          - "Patologia Geral"
-          - "Trato Gastrointestinal"
+          - "Citopatologia"
+          - "Endócrina"
+          - "Ginecológica"
+          - "Hematológica e Linfonodal"
           - "Hepatobiliar e Pâncreas"
           - "Mama"
-          - "Ginecológica"
+          - "Óssea e Partes Moles"
+          - "Patologia Geral"
+          - "Pele"
           - "Pulmonar"
           - "Renal e Trato Urinário"
-          - "Óssea e Partes Moles"
           - "Sistema Nervoso"
-          - "Hematológica e Linfonodal"
-          - "Endócrina"
-          - "Pele"
-          - "Citopatologia"
+          - "Trato Gastrointestinal"
       - { label: "Atualizado em", name: "atualizado", widget: "datetime" }
-      - { label: "Imagem principal", name: "imagem_principal", widget: "image", required: false }
+      - label: "Palavras-chave (tags)"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "Uso interno — ajuda a busca no topo do site a encontrar este tópico. Não aparece na página publicada. Digite uma palavra por linha (ex: adenocarcinoma, cólon, TNM)."
+      - label: "Parágrafo introdutório"
+        name: "intro"
+        widget: "text"
+        required: false
+        hint: "Opcional. Se deixado vazio, a página não mostra nenhum espaço em branco no lugar."
+      - { label: "Imagem principal (pequena, no topo)", name: "imagem_principal", widget: "image", required: false }
       - label: "Conteúdo"
         name: "body"
         widget: "markdown"
-        hint: "Use ## para os títulos das 5 seções: Definição / conceito, Quadro clínico, Diagnóstico, Relevância prática, Referências. Insira imagens de lâmina direto no texto pelo botão de imagem."
+        hint: "Use ## para os títulos das 5 seções: Definição / conceito, Quadro clínico, Diagnóstico, Relevância prática, Referências."
+      - label: "Imagens reais do caso (lâminas)"
+        name: "imagens_reais"
+        widget: "list"
+        required: false
+        hint: "Aparecem no rodapé da página, cada uma com título e observação opcional."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da imagem", name: "titulo", widget: "string" }
+          - { label: "Observação (opcional)", name: "observacao", widget: "text", required: false }
 
   - name: "professores"
     label: "Professores"
@@ -60,10 +79,16 @@ collections:
       - { label: "Conteúdo", name: "body", widget: "markdown" }
 
   - name: "configuracoes"
-    label: "Capa do Site"
+    label: "Páginas Institucionais"
     files:
       - name: "site"
-        label: "Capa da Página Inicial"
+        label: "Home e Tópicos — textos e imagens"
         file: "src/content/configuracoes/site.json"
         fields:
-          - { label: "Imagem de capa", name: "imagem_capa", widget: "image", required: false, hint: "Aparece no topo da página inicial. Se vazio, mostra o desenho ilustrativo padrão." }
+          - { label: "Home — título", name: "home_titulo", widget: "string", required: false }
+          - { label: "Home — texto de introdução", name: "home_texto", widget: "text", required: false, hint: "Se vazio, usa um texto padrão." }
+          - { label: "Home — imagem institucional", name: "home_imagem", widget: "image", required: false }
+          - { label: "Home — legenda da imagem", name: "home_imagem_legenda", widget: "string", required: false }
+          - { label: "Tópicos — texto de introdução", name: "topicos_texto", widget: "text", required: false }
+          - { label: "Tópicos — imagem institucional", name: "topicos_imagem", widget: "image", required: false }
+          - { label: "Tópicos — legenda da imagem", name: "topicos_imagem_legenda", widget: "string", required: false }

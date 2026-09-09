@@ -1,19 +1,20 @@
 import { defineCollection, z } from 'astro:content';
 
+// Ordem alfabética — usada no menu lateral e em qualquer listagem de áreas.
 export const AREAS = [
-  'Patologia Geral',
-  'Trato Gastrointestinal',
+  'Citopatologia',
+  'Endócrina',
+  'Ginecológica',
+  'Hematológica e Linfonodal',
   'Hepatobiliar e Pâncreas',
   'Mama',
-  'Ginecológica',
+  'Óssea e Partes Moles',
+  'Patologia Geral',
+  'Pele',
   'Pulmonar',
   'Renal e Trato Urinário',
-  'Óssea e Partes Moles',
   'Sistema Nervoso',
-  'Hematológica e Linfonodal',
-  'Endócrina',
-  'Pele',
-  'Citopatologia'
+  'Trato Gastrointestinal'
 ] as const;
 
 const topicos = defineCollection({
@@ -22,7 +23,19 @@ const topicos = defineCollection({
     titulo: z.string(),
     area: z.enum(AREAS),
     atualizado: z.date(),
-    imagem_principal: z.string().optional()
+    // Parágrafo opcional no topo da página — some sem deixar buraco se vazio.
+    intro: z.string().optional(),
+    // Imagem pequena no topo do tópico (ilustrativa, não a lâmina real).
+    imagem_principal: z.string().optional(),
+    // Uso interno: ajuda a busca no cabeçalho a encontrar o tópico por palavra-chave.
+    // Não é exibido na página publicada.
+    tags: z.array(z.string()).optional(),
+    // Imagens reais de caso (lâminas), inseridas pelo patologista, com legenda.
+    imagens_reais: z.array(z.object({
+      arquivo: z.string(),
+      titulo: z.string(),
+      observacao: z.string().optional()
+    })).optional()
   })
 });
 
@@ -48,7 +61,13 @@ const institucional = defineCollection({
 const configuracoes = defineCollection({
   type: 'data',
   schema: z.object({
-    imagem_capa: z.string().optional()
+    home_titulo: z.string().optional(),
+    home_texto: z.string().optional(),
+    home_imagem: z.string().optional(),
+    home_imagem_legenda: z.string().optional(),
+    topicos_texto: z.string().optional(),
+    topicos_imagem: z.string().optional(),
+    topicos_imagem_legenda: z.string().optional()
   })
 });
 
