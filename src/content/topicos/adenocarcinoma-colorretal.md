@@ -7,7 +7,7 @@ tags:
   - adenocarcinoma
   - colorretal
 intro: teste teste teste
-imagem_principal: /imagens/portal-patologia-puc-capa-ilustracao.png
+imagem_principal: /imagens/captura-de-tela-2026-09-09-às-15.55.13.jpg
 imagens_reais:
   - arquivo: /imagens/portal-patologia-puc-capa-ilustracao.png.png
     titulo: legenda da imagem
