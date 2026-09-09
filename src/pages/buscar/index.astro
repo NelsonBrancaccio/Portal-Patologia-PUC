@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Busca">
+  <style>
+    .search-head { margin-bottom: 6px; }
+    .search-head .label { font-family: var(--sans); font-size: 12px; color: var(--ink-soft); }
+    .search-head h1 { font-family: var(--sans); font-weight: 600; font-size: 24px; margin: 4px 0 4px; }
+    .search-count { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); margin: 0 0 30px; }
+
+    .result-list { list-style: none; margin: 0; padding: 0; }
+    .result-card { padding: 22px 0; border-top: 1px solid var(--line); }
+    .result-card:first-of-type { border-top: none; }
+    .result-card .kicker { font-family: var(--sans); font-size: 11.5px; font-weight: 600; color: var(--accent); margin: 0 0 4px; display: block; }
+    .result-card h2 { font-family: var(--serif); font-weight: 600; font-size: 21px; margin: 0 0 8px; }
+    .result-card h2 a { color: var(--ink); text-decoration: none; }
+    .result-card h2 a:hover { color: var(--accent); }
+    .result-card .excerpt { font-size: 15px; line-height: 1.6; color: var(--ink-soft); max-width: 68ch; margin: 0 0 6px; }
+    .result-card .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
+    .highlight { background: var(--accent-soft); padding: 0 1px; }
+
+    .empty-state { padding: 30px 0; }
+    .empty-state p { font-family: var(--sans); font-size: 14.5px; color: var(--ink-soft); }
+  </style>
+
+  <div class="search-head">
+    <span class="label">Resultados da busca</span>
+    <h1 id="search-title">&nbsp;</h1>
+  </div>
+  <p class="search-count" id="search-count"></p>
+
+  <div id="search-output"></div>
+
+  <script>
+    function normalize(s) {
+      return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    function escapeHtml(s) {
+      return (s || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] || c));
+    }
+    function highlight(text, q) {
+      if (!q) return escapeHtml(text);
+      const idx = normalize(text).indexOf(normalize(q));
+      if (idx === -1) return escapeHtml(text);
+      const before = text.slice(0, idx), match = text.slice(idx, idx + q.length), after = text.slice(idx + q.length);
+      return escapeHtml(before) + '<span class="highlight">' + escapeHtml(match) + '</span>' + escapeHtml(after);
+    }
+
+    // O índice completo já está embutido no Layout (script#search-data).
+    const globalDataEl = document.getElementById('search-data');
+    const index = globalDataEl ? JSON.parse(globalDataEl.textContent || '[]') : [];
+
+    const params = new URLSearchParams(window.location.search);
+    const q = (params.get('q') || '').trim();
+
+    const titleEl = document.getElementById('search-title');
+    const countEl = document.getElementById('search-count');
+    const outputEl = document.getElementById('search-output');
+
+    if (titleEl) titleEl.textContent = q ? `\u201C${q}\u201D` : 'Digite algo para buscar';
+
+    if (!q) {
+      if (countEl) countEl.textContent = '';
+    } else {
+      const nq = normalize(q);
+      const matches = index.filter((item) => {
+        const haystack = normalize(
+          item.titulo + ' ' + item.area + ' ' + (item.tags || []).join(' ') + ' ' + (item.content || '')
+        );
+        return haystack.includes(nq);
+      });
+
+      if (countEl) {
+        countEl.textContent = matches.length === 0
+          ? ''
+          : matches.length === 1 ? '1 tópico encontrado' : `${matches.length} tópicos encontrados`;
+      }
+
+      if (outputEl) {
+        if (matches.length === 0) {
+          outputEl.innerHTML = '<div class="empty-state"><p>Nenhum tópico encontrado para essa busca. Tente outra palavra-chave.</p></div>';
+        } else {
+          outputEl.innerHTML = '<ul class="result-list">' + matches.map((m) => `
+            <li class="result-card">
+              <span class="kicker">${escapeHtml(m.area)}</span>
+              <h2><a href="/topicos/${m.slug}/">${highlight(m.titulo, q)}</a></h2>
+              <p class="excerpt">${escapeHtml(m.excerpt)}</p>
+              <span class="meta">Atualizado em ${escapeHtml(m.atualizado)}</span>
+            </li>
+          `).join('') + '</ul>';
+        }
+      }
+    }
+  </script>
+</Layout>
