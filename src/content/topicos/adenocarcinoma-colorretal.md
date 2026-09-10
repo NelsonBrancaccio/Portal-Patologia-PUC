@@ -1,8 +1,15 @@
 ---
-titulo: "Adenocarcinoma Colorretal"
-area: "Trato Gastrointestinal"
+titulo: Adenocarcinoma Colorretal
+area: Trato Gastrointestinal
 atualizado: 2026-09-02
-imagem_principal: ""
+intro: O adenocarcinoma colorretal é a neoplasia maligna mais comum do trato
+  gastrointestinal baixo e uma das principais causas de morte por câncer no
+  mundo. O diagnóstico histológico preciso, com graduação e avaliação de invasão
+  e margens, é o que efetivamente orienta a conduta terapêutica.
+imagem_principal: /imagens/portal-patologia-puc-adenocarcinoma-colorretal-ilustracao.jpg
+imagens_reais:
+  - arquivo: /imagens/portal-patologia-puc-adenocarcinoma-colorretal-localizacao.jpg
+    titulo: Local da lesão
 ---
 
 ## Definição / conceito
