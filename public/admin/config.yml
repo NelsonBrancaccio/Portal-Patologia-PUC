@@ -71,6 +71,15 @@ collections:
       - { label: "E-mail de contato (só se estiver na ativa)", name: "contato_email", widget: "string", required: false }
       - { label: "Telefone de contato (só se estiver na ativa)", name: "contato_telefone", widget: "string", required: false }
       - { label: "História breve", name: "body", widget: "markdown" }
+      - label: "Galeria de fotos"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Opcional. Fotos adicionais — turma, formatura, eventos. Só aparece no site se tiver ao menos uma foto aqui."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da foto", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
 
   - name: "institucional"
     label: "Página Sobre"
@@ -79,12 +88,41 @@ collections:
     fields:
       - { label: "Título", name: "titulo", widget: "string" }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
+      - label: "Galeria de imagens"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Aparece no final da página, cada imagem com título e descrição opcional."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da imagem", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
+
+  - name: "divulgacao"
+    label: "Página A Patologia"
+    folder: "src/content/divulgacao"
+    create: false
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - label: "Texto"
+        name: "body"
+        widget: "markdown"
+        hint: "Texto de introdução sobre a área — importância da especialidade, cenário atual, o que quiser destacar."
+      - label: "Galeria — nossa estrutura"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Fotos de microscópios, sala de necropsia, laboratório etc., cada uma com título e descrição opcional."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da imagem", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
 
   - name: "configuracoes"
     label: "Páginas Institucionais"
     files:
       - name: "site"
-        label: "Home e Tópicos — textos e imagens"
+        label: "Home, Tópicos e A Patologia — textos e imagens"
         file: "src/content/configuracoes/site.json"
         fields:
           - { label: "Home — título", name: "home_titulo", widget: "string", required: false }
@@ -94,3 +132,5 @@ collections:
           - { label: "Tópicos — texto de introdução", name: "topicos_texto", widget: "text", required: false }
           - { label: "Tópicos — imagem institucional", name: "topicos_imagem", widget: "image", required: false }
           - { label: "Tópicos — legenda da imagem", name: "topicos_imagem_legenda", widget: "string", required: false }
+          - { label: "A Patologia — imagem de capa", name: "patologia_imagem", widget: "image", required: false }
+          - { label: "A Patologia — legenda da imagem", name: "patologia_imagem_legenda", widget: "string", required: false }

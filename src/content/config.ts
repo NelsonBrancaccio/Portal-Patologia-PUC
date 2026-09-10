@@ -47,14 +47,36 @@ const professores = defineCollection({
     ativo: z.boolean().default(false),
     periodo: z.string().optional(),
     contato_email: z.string().optional(),
-    contato_telefone: z.string().optional()
+    contato_telefone: z.string().optional(),
+    galeria: z.array(z.object({
+      arquivo: z.string(),
+      titulo: z.string(),
+      descricao: z.string().optional()
+    })).optional()
   })
 });
 
 const institucional = defineCollection({
   type: 'content',
   schema: z.object({
-    titulo: z.string()
+    titulo: z.string(),
+    galeria: z.array(z.object({
+      arquivo: z.string(),
+      titulo: z.string(),
+      descricao: z.string().optional()
+    })).optional()
+  })
+});
+
+const divulgacao = defineCollection({
+  type: 'content',
+  schema: z.object({
+    titulo: z.string(),
+    galeria: z.array(z.object({
+      arquivo: z.string(),
+      titulo: z.string(),
+      descricao: z.string().optional()
+    })).optional()
   })
 });
 
@@ -67,8 +89,10 @@ const configuracoes = defineCollection({
     home_imagem_legenda: z.string().optional(),
     topicos_texto: z.string().optional(),
     topicos_imagem: z.string().optional(),
-    topicos_imagem_legenda: z.string().optional()
+    topicos_imagem_legenda: z.string().optional(),
+    patologia_imagem: z.string().optional(),
+    patologia_imagem_legenda: z.string().optional()
   })
 });
 
-export const collections = { topicos, professores, institucional, configuracoes };
+export const collections = { topicos, professores, institucional, divulgacao, configuracoes };
