@@ -18,7 +18,7 @@ async function renderAll(entries: typeof todos) {
 const ativosR = await renderAll(ativos);
 const historicosR = await renderAll(historicos);
 ---
-<Layout title="Professores">
+<Layout title="Professores" backHref="/" backLabel="Voltar para o início">
   <style>
     .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 10px; }
     .page-sub { font-size: 15.5px; color: var(--ink-soft); max-width: 60ch; margin: 0 0 28px; }

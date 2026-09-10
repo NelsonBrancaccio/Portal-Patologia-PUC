@@ -5,9 +5,11 @@ import { getCollection } from 'astro:content';
 interface Props {
   title: string;
   activeArea?: string;
+  backHref?: string;
+  backLabel?: string;
 }
 
-const { title, activeArea } = Astro.props;
+const { title, activeArea, backHref, backLabel } = Astro.props;
 
 const topicos = await getCollection('topicos');
 const porArea = AREAS.map((area) => ({
@@ -86,6 +88,7 @@ const searchIndex = topicos.map((t) => ({
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); }
 
+    /* ---------- header ---------- */
     .site-header { background: var(--navy); padding: 14px 36px; display: flex; align-items: center; gap: 28px; position: relative; z-index: 40; }
     .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-img { height: 42px; width: auto; flex-shrink: 0; display: block; }
@@ -99,9 +102,25 @@ const searchIndex = topicos.map((t) => ({
     .hnav { margin-left: auto; display: flex; gap: 26px; font-family: var(--sans); font-size: 13px; }
     .hnav a { color: #D8CFA6; text-decoration: none; }
 
+    .hamburger {
+      display: none; width: 36px; height: 36px; flex-shrink: 0; align-items: center; justify-content: center;
+      background: var(--navy-2); border: 1px solid #33415A; color: #D8CFA6; font-size: 17px; cursor: pointer;
+      margin-left: auto;
+    }
+
+    .mobile-search-row { display: none; }
+
+    .mobile-panel { display: none; background: var(--navy-2); border-top: 1px solid #33415A; padding: 6px 20px 16px; }
+    .mobile-panel.open { display: block; }
+    .mobile-panel a { display: block; font-family: var(--sans); font-size: 14px; color: #EDEBE3; text-decoration: none; padding: 10px 2px; border-bottom: 1px solid #2C3A50; }
+    .mobile-panel a:last-child { border-bottom: none; }
+
+    /* ---------- shell / sidebar ---------- */
     .shell { display: grid; grid-template-columns: 240px 1fr; max-width: 1160px; margin: 0 auto; }
     .sidebar { border-right: 1px solid var(--line); padding: 26px 18px; background: var(--paper-dim); }
     .sidebar .label { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-soft); margin-bottom: 12px; padding: 0 4px; }
+
+    .topics-toggle { display: none; }
 
     .area-block { border-bottom: 1px solid var(--paper); }
     .area-block:last-child { border-bottom: none; }
@@ -122,6 +141,9 @@ const searchIndex = topicos.map((t) => ({
 
     .main { padding: 34px 44px 40px; }
 
+    .back-link { display: inline-flex; align-items: center; gap: 4px; font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); text-decoration: none; margin-bottom: 18px; }
+    .back-link:hover { color: var(--accent); }
+
     .figure { background: var(--accent-soft); border: 1px solid #C9D8D5; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 26px 16px 16px; margin: 20px 0; }
     .figure figcaption { font-family: var(--sans); font-size: 11.5px; font-style: italic; color: var(--ink-soft); margin-top: 12px; text-align: center; max-width: 46ch; }
     .figure.hero-fig { aspect-ratio: 4/3; padding: 0; overflow: hidden; }
@@ -131,9 +153,25 @@ const searchIndex = topicos.map((t) => ({
 
     .site-footer { padding: 22px 44px 30px; font-family: var(--sans); font-size: 12px; color: var(--ink-soft); display: flex; justify-content: space-between; border-top: 1px solid var(--line); max-width: 1160px; margin: 0 auto; }
 
-    @media (max-width: 760px) {
+    /* ---------- compact layout: phones + tablets, same breakpoint ---------- */
+    @media (max-width: 959px) {
+      .search-wrap { display: none; }
+      .hnav { display: none; }
+      .hamburger { display: flex; }
+      .mobile-search-row { display: block; background: var(--navy); padding: 0 20px 14px; }
+      .mobile-search-row .hsearch { width: 100%; }
+
       .shell { grid-template-columns: 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+      .topics-toggle {
+        display: flex; align-items: center; justify-content: space-between; width: 100%;
+        font-family: var(--sans); font-weight: 600; font-size: 13.5px; color: var(--ink);
+        background: var(--paper-dim); border: 1px solid var(--line); border-left: none; border-right: none;
+        padding: 12px 22px; cursor: pointer;
+      }
+      .topics-toggle .chev { transition: transform 0.15s; color: var(--ink-soft); }
+      .topics-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+      .sidebar { display: none; border-right: none; border-bottom: 1px solid var(--line); }
+      .sidebar.open { display: block; }
       .main, .site-footer { padding-left: 22px; padding-right: 22px; }
     }
   </style>
@@ -148,19 +186,38 @@ const searchIndex = topicos.map((t) => ({
       </div>
     </a>
     <form class="search-wrap" action="/buscar/" method="get">
-      <input name="q" id="site-search" class="hsearch" placeholder="Buscar tópico ou palavra-chave..." autocomplete="off" />
+      <input name="q" class="hsearch" placeholder="Buscar tópico ou palavra-chave..." autocomplete="off" />
     </form>
     <nav class="hnav">
+      <a href="/">Home</a>
       <a href="/topicos/">Tópicos</a>
       <a href="/professores/">Professores</a>
       <a href="/sobre/">Sobre</a>
       <a href="/admin/">Para autores</a>
     </nav>
+    <button type="button" class="hamburger" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
   </header>
 
+  <form class="mobile-search-row" action="/buscar/" method="get">
+    <input name="q" class="hsearch" placeholder="Buscar tópico ou palavra-chave..." autocomplete="off" />
+  </form>
+
+  <div class="mobile-panel" id="mobile-panel">
+    <a href="/">Home</a>
+    <a href="/topicos/">Tópicos</a>
+    <a href="/professores/">Professores</a>
+    <a href="/sobre/">Sobre</a>
+    <a href="/admin/">Para autores</a>
+  </div>
+
   <div class="shell">
-    <aside class="sidebar">
-      <div class="label">ÁREAS</div>
+    <button type="button" class="topics-toggle" id="topics-toggle" aria-expanded="false">
+      <span>Tópicos</span>
+      <span class="chev">▾</span>
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="label">TÓPICOS</div>
       {porArea.map(({ area, itens }) => (
         <details class={`area-block ${area === activeArea ? 'active' : ''}`} open={area === activeArea}>
           <summary>
@@ -183,6 +240,7 @@ const searchIndex = topicos.map((t) => ({
     </aside>
 
     <main class="main">
+      {backHref && <a class="back-link" href={backHref}>‹ {backLabel || 'Voltar'}</a>}
       <slot />
     </main>
   </div>
@@ -193,5 +251,21 @@ const searchIndex = topicos.map((t) => ({
   </footer>
 
   <script type="application/json" id="search-data" set:html={JSON.stringify(searchIndex)}></script>
+  <script>
+    const burger = document.getElementById('menu-toggle');
+    const panel = document.getElementById('mobile-panel');
+    burger?.addEventListener('click', () => {
+      const isOpen = panel?.classList.toggle('open');
+      burger.textContent = isOpen ? '✕' : '☰';
+      burger.setAttribute('aria-expanded', String(!!isOpen));
+    });
+
+    const topicsToggle = document.getElementById('topics-toggle');
+    const sidebar = document.getElementById('sidebar');
+    topicsToggle?.addEventListener('click', () => {
+      const isOpen = sidebar?.classList.toggle('open');
+      topicsToggle.setAttribute('aria-expanded', String(!!isOpen));
+    });
+  </script>
 </body>
 </html>

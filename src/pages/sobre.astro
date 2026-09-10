@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
 const [entry] = await getCollection('institucional');
 const { Content } = await entry.render();
 ---
-<Layout title={entry.data.titulo}>
+<Layout title={entry.data.titulo} backHref="/" backLabel="Voltar para o início">
   <style>
     .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 24px; }
     .about-body :global(h2) {
