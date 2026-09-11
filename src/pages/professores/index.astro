@@ -6,6 +6,19 @@ const todos = await getCollection('professores');
 const collator = new Intl.Collator('pt-BR');
 const ativos = todos.filter((p) => p.data.ativo).sort((a, b) => collator.compare(a.data.nome, b.data.nome));
 const historicos = todos.filter((p) => !p.data.ativo).sort((a, b) => collator.compare(a.data.nome, b.data.nome));
+
+function firstParagraph(md: string) {
+  // Remove tags HTML primeiro (o conteúdo do /admin vem em HTML, com cada
+  // tag em sua própria linha) — sem isso, uma tag isolada como "<p>" era
+  // capturada como se fosse o próprio parágrafo.
+  const semTags = (md ?? '').replace(/<[^>]+>/g, '\n');
+  const blocks = semTags.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
+  const first = blocks[0] || '';
+  return first
+    .replace(/[#>*_`]/g, '')
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+    .trim();
+}
 ---
 <Layout title="Professores" backHref="/" backLabel="Voltar para o início">
   <style>
@@ -16,13 +29,16 @@ const historicos = todos.filter((p) => !p.data.ativo).sort((a, b) => collator.co
       padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
     }
     .prof-row {
-      display: flex; align-items: center; gap: 16px; padding: 12px 6px;
+      display: flex; align-items: flex-start; gap: 18px; padding: 18px 6px;
       border-bottom: 1px solid var(--paper-dim); text-decoration: none; color: var(--ink);
     }
     .prof-row:hover { background: var(--paper-dim); }
-    .prof-row .ph { width: 44px; aspect-ratio: 4/5; background: var(--accent-soft); border: 1px solid #C9D8D5; flex-shrink: 0; overflow: hidden; }
+    .prof-row .ph { width: 70px; aspect-ratio: 4/5; background: var(--accent-soft); border: 1px solid #C9D8D5; flex-shrink: 0; overflow: hidden; }
     .prof-row .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .prof-row .name { font-family: var(--sans); font-weight: 600; font-size: 15.5px; }
+    .prof-row .info { min-width: 0; }
+    .prof-row .name { font-family: var(--sans); font-weight: 600; font-size: 16.5px; display: block; }
+    .prof-row .period { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin: 3px 0 8px; display: block; }
+    .prof-row .excerpt { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 68ch; }
     .empty { font-size: 15px; color: var(--ink-soft); }
   </style>
 
@@ -36,7 +52,11 @@ const historicos = todos.filter((p) => !p.data.ativo).sort((a, b) => collator.co
     ativos.map((p) => (
       <a class="prof-row" href={`/professores/${p.slug}/`}>
         <div class="ph">{p.data.foto && <img src={p.data.foto} alt={p.data.nome} />}</div>
-        <span class="name">{p.data.nome}</span>
+        <div class="info">
+          <span class="name">{p.data.nome}</span>
+          {p.data.periodo && <span class="period">{p.data.periodo}</span>}
+          {firstParagraph(p.body) && <p class="excerpt">{firstParagraph(p.body)}</p>}
+        </div>
       </a>
     ))
   )}
@@ -48,7 +68,11 @@ const historicos = todos.filter((p) => !p.data.ativo).sort((a, b) => collator.co
     historicos.map((p) => (
       <a class="prof-row" href={`/professores/${p.slug}/`}>
         <div class="ph">{p.data.foto && <img src={p.data.foto} alt={p.data.nome} />}</div>
-        <span class="name">{p.data.nome}</span>
+        <div class="info">
+          <span class="name">{p.data.nome}</span>
+          {p.data.periodo && <span class="period">{p.data.periodo}</span>}
+          {firstParagraph(p.body) && <p class="excerpt">{firstParagraph(p.body)}</p>}
+        </div>
       </a>
     ))
   )}

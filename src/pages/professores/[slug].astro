@@ -11,21 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-
-function firstParagraph(md: string) {
-  // Remove tags HTML primeiro (o conteúdo do /admin vem em HTML, com cada
-  // tag em sua própria linha) — sem isso, uma tag isolada como "<p>" era
-  // capturada como se fosse o próprio parágrafo.
-  const semTags = md.replace(/<[^>]+>/g, '\n');
-  const blocks = semTags.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
-  const first = blocks[0] || '';
-  return first
-    .replace(/[#>*_`]/g, '')
-    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
-    .trim();
-}
-
-const intro = firstParagraph(entry.body ?? '');
+const { Content } = await entry.render();
 ---
 <Layout title={entry.data.nome} backHref="/professores/" backLabel="Voltar para Professores">
   <style>
@@ -40,7 +26,13 @@ const intro = firstParagraph(entry.body ?? '');
     .detail-info .contact { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--sans); font-size: 13.5px; }
     .detail-info .contact a { color: var(--accent); text-decoration: none; }
 
-    .first-p { font-size: 16.5px; line-height: 1.7; color: var(--ink); max-width: 66ch; margin: 0 0 8px; }
+    .bio { font-size: 16.5px; line-height: 1.7; color: var(--ink); max-width: 66ch; }
+    .bio p { margin: 0 0 16px; }
+    .bio h2 { font-family: var(--sans); font-weight: 600; font-size: 19px; margin: 30px 0 12px; }
+    .bio ul { margin: 0 0 16px; padding-left: 22px; }
+    .bio li { margin-bottom: 10px; }
+    .bio .callout { background: var(--paper-dim); border-left: 3px solid var(--accent); padding: 16px 20px; margin: 20px 0; }
+    .bio .callout p { margin: 0; }
 
     .gallery-toggle { margin-top: 24px; }
     .gallery-toggle summary { list-style: none; cursor: pointer; font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--accent); }
@@ -74,7 +66,9 @@ const intro = firstParagraph(entry.body ?? '');
     </div>
   </div>
 
-  {intro && <p class="first-p">{intro}</p>}
+  <div class="bio">
+    <Content />
+  </div>
 
   {entry.data.galeria && entry.data.galeria.length > 0 && (
     <details class="gallery-toggle">
