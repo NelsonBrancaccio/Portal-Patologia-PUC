@@ -1,0 +1,187 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: editorial_workflow
+
+media_folder: "public/imagens"
+public_folder: "/imagens"
+
+collections:
+  - name: "topicos"
+    label: "Tópicos"
+    folder: "src/content/topicos"
+    create: true
+    identifier_field: "titulo"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - label: "Área"
+        name: "area"
+        widget: "select"
+        options:
+          - "Citopatologia"
+          - "Endócrina"
+          - "Ginecológica"
+          - "Hematológica e Linfonodal"
+          - "Hepatobiliar e Pâncreas"
+          - "Mama"
+          - "Óssea e Partes Moles"
+          - "Patologia Geral"
+          - "Pele"
+          - "Pulmonar"
+          - "Renal e Trato Urinário"
+          - "Sistema Nervoso"
+          - "Trato Gastrointestinal"
+      - { label: "Atualizado em", name: "atualizado", widget: "datetime" }
+      - label: "Palavras-chave (tags)"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "Uso interno — ajuda a busca no topo do site a encontrar este tópico. Não aparece na página publicada. Digite uma palavra por linha (ex: adenocarcinoma, cólon, TNM)."
+      - label: "Parágrafo introdutório"
+        name: "intro"
+        widget: "text"
+        required: false
+        hint: "Opcional. Se deixado vazio, a página não mostra nenhum espaço em branco no lugar."
+      - { label: "Imagem principal (pequena, no topo)", name: "imagem_principal", widget: "image", required: false }
+      - label: "Conteúdo"
+        name: "body"
+        widget: "markdown"
+        hint: "Use ## para os títulos das 5 seções: Definição / conceito, Quadro clínico, Diagnóstico, Relevância prática, Referências."
+      - label: "Imagens reais do caso (lâminas)"
+        name: "imagens_reais"
+        widget: "list"
+        required: false
+        hint: "Aparecem no rodapé da página, cada uma com título e observação opcional."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da imagem", name: "titulo", widget: "string" }
+          - { label: "Observação (opcional)", name: "observacao", widget: "text", required: false }
+
+  - name: "professores"
+    label: "Professores"
+    folder: "src/content/professores"
+    create: true
+    identifier_field: "nome"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "Está na ativa?", name: "ativo", widget: "boolean", default: false }
+      - { label: "Período (ex: desde 2010, ou 1998–2015)", name: "periodo", widget: "string", required: false }
+      - { label: "E-mail de contato (só se estiver na ativa)", name: "contato_email", widget: "string", required: false }
+      - { label: "Telefone de contato (só se estiver na ativa)", name: "contato_telefone", widget: "string", required: false }
+      - { label: "História breve", name: "body", widget: "markdown" }
+      - label: "Galeria de fotos"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Opcional. Fotos adicionais — turma, formatura, eventos. Só aparece no site se tiver ao menos uma foto aqui."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da foto", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
+
+  - name: "institucional"
+    label: "Página Sobre"
+    folder: "src/content/institucional"
+    create: false
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+      - label: "Galeria de imagens"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Aparece no final da página, cada imagem com título e descrição opcional."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da imagem", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
+
+  - name: "divulgacao"
+    label: "Página A Patologia"
+    folder: "src/content/divulgacao"
+    create: false
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - label: "Texto"
+        name: "body"
+        widget: "markdown"
+        hint: "Texto de introdução sobre a área — importância da especialidade, cenário atual, o que quiser destacar."
+      - label: "Galeria — nossa estrutura"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Fotos de microscópios, sala de necropsia, laboratório etc., cada uma com título e descrição opcional."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da imagem", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
+
+  - name: "liga_membros"
+    label: "Liga de Patologia — Gestão"
+    folder: "src/content/liga_membros"
+    create: true
+    identifier_field: "nome"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "Cargo", name: "cargo", widget: "string" }
+      - { label: "Turma da PUC (ano de entrada)", name: "turma", widget: "string" }
+      - { label: "Gestão (ex: Gestão 2026)", name: "gestao", widget: "string" }
+      - label: "Ordem de exibição"
+        name: "ordem"
+        widget: "number"
+        default: 1
+        hint: "Define a posição na lista, do menor para o maior (1 = primeiro, ex: presidente). Use números com espaço entre eles (10, 20, 30...) para facilitar reordenar depois."
+
+  - name: "eventos"
+    label: "Liga de Patologia — Eventos"
+    folder: "src/content/eventos"
+    create: true
+    identifier_field: "tema"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Tema", name: "tema", widget: "string" }
+      - { label: "Data", name: "data", widget: "datetime", time_format: false, date_format: "DD/MM/YYYY", format: "YYYY-MM-DD" }
+      - { label: "Horário (ex: 19h, ou 19h–21h)", name: "horario", widget: "string", required: false }
+      - { label: "Local", name: "local", widget: "string", required: false }
+      - { label: "Resumo do tema", name: "resumo", widget: "text", required: false }
+      - { label: "Professor apresentador", name: "professor", widget: "string", required: false }
+      - label: "PDF do material"
+        name: "pdf"
+        widget: "file"
+        required: false
+        media_folder: "/public/arquivos"
+        public_folder: "/arquivos"
+        hint: "Preencha depois que o evento acontecer. Fica disponível para download na página."
+      - label: "Galeria de fotos do evento"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Preencha depois que o evento acontecer. Só aparece no site se tiver ao menos uma foto."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da foto", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
+
+  - name: "configuracoes"
+    label: "Páginas Institucionais"
+    files:
+      - name: "site"
+        label: "Home, Tópicos, A Patologia e Liga — textos e imagens"
+        file: "src/content/configuracoes/site.json"
+        fields:
+          - { label: "Home — título", name: "home_titulo", widget: "string", required: false }
+          - { label: "Home — texto de introdução", name: "home_texto", widget: "text", required: false, hint: "Se vazio, usa um texto padrão." }
+          - { label: "Home — imagem institucional", name: "home_imagem", widget: "image", required: false }
+          - { label: "Home — legenda da imagem", name: "home_imagem_legenda", widget: "string", required: false }
+          - { label: "Tópicos — texto de introdução", name: "topicos_texto", widget: "text", required: false }
+          - { label: "Tópicos — imagem institucional", name: "topicos_imagem", widget: "image", required: false }
+          - { label: "Tópicos — legenda da imagem", name: "topicos_imagem_legenda", widget: "string", required: false }
+          - { label: "A Patologia — imagem de capa", name: "patologia_imagem", widget: "image", required: false }
+          - { label: "A Patologia — legenda da imagem", name: "patologia_imagem_legenda", widget: "string", required: false }
+          - { label: "Liga de Patologia — texto de introdução", name: "liga_texto", widget: "text", required: false, hint: "Se vazio, usa um texto padrão." }
