@@ -13,7 +13,11 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 
 function firstParagraph(md: string) {
-  const blocks = md.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
+  // Remove tags HTML primeiro (o conteúdo do /admin vem em HTML, com cada
+  // tag em sua própria linha) — sem isso, uma tag isolada como "<p>" era
+  // capturada como se fosse o próprio parágrafo.
+  const semTags = md.replace(/<[^>]+>/g, '\n');
+  const blocks = semTags.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
   const first = blocks[0] || '';
   return first
     .replace(/[#>*_`]/g, '')
@@ -50,40 +54,3 @@ const intro = firstParagraph(entry.body ?? '');
     .g-item .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .g-item .cap-title { font-family: var(--sans); font-weight: 600; font-size: 12.5px; margin: 6px 0 2px; }
     .g-item .cap-desc { font-family: var(--sans); font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
-    @media (min-width: 600px) and (max-width: 959px) { .gallery { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 960px) { .gallery { display: flex; flex-wrap: wrap; gap: 18px; } .g-item { width: 160px; } }
-  </style>
-
-  <div class="crumb"><a href="/professores/">Professores</a> › {entry.data.nome}</div>
-
-  <div class="detail-top">
-    <div class="detail-photo">{entry.data.foto && <img src={entry.data.foto} alt={entry.data.nome} />}</div>
-    <div class="detail-info">
-      <p class="name">{entry.data.nome}</p>
-      {entry.data.periodo && <p class="period">{entry.data.periodo}</p>}
-      {entry.data.ativo && (
-        <div class="contact">
-          {entry.data.contato_email && <a href={`mailto:${entry.data.contato_email}`}>{entry.data.contato_email}</a>}
-          {entry.data.contato_telefone && <span>{entry.data.contato_telefone}</span>}
-        </div>
-      )}
-    </div>
-  </div>
-
-  {intro && <p class="first-p">{intro}</p>}
-
-  {entry.data.galeria && entry.data.galeria.length > 0 && (
-    <details class="gallery-toggle">
-      <summary></summary>
-      <div class="gallery">
-        {entry.data.galeria.map((g) => (
-          <div class="g-item">
-            <div class="ph"><img src={g.arquivo} alt={g.titulo} /></div>
-            <p class="cap-title">{g.titulo}</p>
-            {g.descricao && <p class="cap-desc">{g.descricao}</p>}
-          </div>
-        ))}
-      </div>
-    </details>
-  )}
-</Layout>
