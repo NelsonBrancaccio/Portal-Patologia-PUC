@@ -1,5 +1,5 @@
 ---
-nome: Nelson Brancaccio dos Santos
+nome: Prof. Dr. Nelson Brancaccio dos Santos
 foto: /imagens/professor-nelson-brancaccio.jpg
 ativo: true
 periodo: desde 1988
