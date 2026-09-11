@@ -1,5 +1,6 @@
 ---
 nome: Prof. Dr. Jerônymo Stecca
+foto: /imagens/professor-stecca.jpg
 ativo: false
 periodo: 1962 - 2009
 ---
