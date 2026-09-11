@@ -1,0 +1,66 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const membros = (await getCollection('liga_membros')).sort((a, b) => a.data.ordem - b.data.ordem);
+const config = await getEntry('configuracoes', 'site');
+const data = config?.data;
+
+const gestaoAtual = membros[0]?.data.gestao;
+---
+<Layout title="Liga de Patologia" backHref="/" backLabel="Voltar para o início">
+  <style>
+    .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 14px; }
+    .page-sub { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 68ch; margin: 0 0 28px; }
+    .section-h2 {
+      font-family: var(--sans); font-weight: 600; font-size: 18px; margin: 32px 0 4px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
+    }
+    .gestao-label { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin: 0 0 18px; }
+
+    .member-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    @media (min-width: 600px) and (max-width: 959px) { .member-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .member-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .member-card { border: 1px solid var(--line); background: #fff; padding: 16px; display: flex; gap: 14px; align-items: center; }
+    .member-photo { width: 64px; aspect-ratio: 4/5; background: var(--accent-soft); border: 1px solid #C9D8D5; flex-shrink: 0; overflow: hidden; }
+    .member-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .member-info .name { font-family: var(--sans); font-weight: 600; font-size: 14.5px; margin: 0 0 3px; }
+    .member-info .cargo { font-family: var(--sans); font-size: 12.5px; color: var(--accent); font-weight: 600; margin: 0 0 2px; }
+    .member-info .turma { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
+
+    .empty { font-size: 15px; color: var(--ink-soft); }
+
+    .cta-row { margin-top: 34px; }
+    .cta { display: inline-block; font-family: var(--sans); font-size: 13px; font-weight: 600; color: #fff; background: var(--accent); padding: 10px 18px; text-decoration: none; }
+  </style>
+
+  <h1 class="page-h1">Liga de Patologia</h1>
+  <p class="page-sub">
+    {data?.liga_texto || 'A Liga de Patologia reúne alunos da PUC-SP Sorocaba interessados em aprofundar o contato com a especialidade, organizando eventos, palestras e atividades práticas ao longo do ano.'}
+  </p>
+
+  <h2 class="section-h2">Gestão</h2>
+  {gestaoAtual && <p class="gestao-label">{gestaoAtual}</p>}
+
+  {membros.length === 0 ? (
+    <p class="empty">Nenhum integrante cadastrado ainda.</p>
+  ) : (
+    <div class="member-grid">
+      {membros.map((m) => (
+        <div class="member-card">
+          <div class="member-photo">{m.data.foto && <img src={m.data.foto} alt={m.data.nome} />}</div>
+          <div class="member-info">
+            <p class="name">{m.data.nome}</p>
+            <p class="cargo">{m.data.cargo}</p>
+            <p class="turma">Turma {m.data.turma}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="cta-row">
+    <a class="cta" href="/liga/eventos/">Ver eventos da liga</a>
+  </div>
+</Layout>

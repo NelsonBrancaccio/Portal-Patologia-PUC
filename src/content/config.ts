@@ -80,6 +80,37 @@ const divulgacao = defineCollection({
   })
 });
 
+const liga_membros = defineCollection({
+  type: 'content',
+  schema: z.object({
+    nome: z.string(),
+    foto: z.string().optional(),
+    cargo: z.string(),
+    turma: z.string(),
+    gestao: z.string(),
+    // Define a ordem de exibição (hierarquia) — menor número aparece primeiro.
+    ordem: z.number().default(999)
+  })
+});
+
+const eventos = defineCollection({
+  type: 'content',
+  schema: z.object({
+    tema: z.string(),
+    data: z.date(),
+    horario: z.string().optional(),
+    local: z.string().optional(),
+    resumo: z.string().optional(),
+    professor: z.string().optional(),
+    pdf: z.string().optional(),
+    galeria: z.array(z.object({
+      arquivo: z.string(),
+      titulo: z.string(),
+      descricao: z.string().optional()
+    })).optional()
+  })
+});
+
 const configuracoes = defineCollection({
   type: 'data',
   schema: z.object({
@@ -91,8 +122,9 @@ const configuracoes = defineCollection({
     topicos_imagem: z.string().optional(),
     topicos_imagem_legenda: z.string().optional(),
     patologia_imagem: z.string().optional(),
-    patologia_imagem_legenda: z.string().optional()
+    patologia_imagem_legenda: z.string().optional(),
+    liga_texto: z.string().optional()
   })
 });
 
-export const collections = { topicos, professores, institucional, divulgacao, configuracoes };
+export const collections = { topicos, professores, institucional, divulgacao, liga_membros, eventos, configuracoes };

@@ -118,11 +118,57 @@ collections:
           - { label: "Título da imagem", name: "titulo", widget: "string" }
           - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
 
+  - name: "liga_membros"
+    label: "Liga de Patologia — Gestão"
+    folder: "src/content/liga_membros"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "Cargo", name: "cargo", widget: "string" }
+      - { label: "Turma da PUC (ano de entrada)", name: "turma", widget: "string" }
+      - { label: "Gestão (ex: Gestão 2026)", name: "gestao", widget: "string" }
+      - label: "Ordem de exibição"
+        name: "ordem"
+        widget: "number"
+        default: 1
+        hint: "Define a posição na lista, do menor para o maior (1 = primeiro, ex: presidente). Use números com espaço entre eles (10, 20, 30...) para facilitar reordenar depois."
+
+  - name: "eventos"
+    label: "Liga de Patologia — Eventos"
+    folder: "src/content/eventos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Tema", name: "tema", widget: "string" }
+      - { label: "Data", name: "data", widget: "date" }
+      - { label: "Horário (ex: 19h, ou 19h–21h)", name: "horario", widget: "string", required: false }
+      - { label: "Local", name: "local", widget: "string", required: false }
+      - { label: "Resumo do tema", name: "resumo", widget: "text", required: false }
+      - { label: "Professor apresentador", name: "professor", widget: "string", required: false }
+      - label: "PDF do material"
+        name: "pdf"
+        widget: "file"
+        required: false
+        media_folder: "/public/arquivos"
+        public_folder: "/arquivos"
+        hint: "Preencha depois que o evento acontecer. Fica disponível para download na página."
+      - label: "Galeria de fotos do evento"
+        name: "galeria"
+        widget: "list"
+        required: false
+        hint: "Preencha depois que o evento acontecer. Só aparece no site se tiver ao menos uma foto."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Título da foto", name: "titulo", widget: "string" }
+          - { label: "Descrição (opcional)", name: "descricao", widget: "text", required: false }
+
   - name: "configuracoes"
     label: "Páginas Institucionais"
     files:
       - name: "site"
-        label: "Home, Tópicos e A Patologia — textos e imagens"
+        label: "Home, Tópicos, A Patologia e Liga — textos e imagens"
         file: "src/content/configuracoes/site.json"
         fields:
           - { label: "Home — título", name: "home_titulo", widget: "string", required: false }
@@ -134,3 +180,4 @@ collections:
           - { label: "Tópicos — legenda da imagem", name: "topicos_imagem_legenda", widget: "string", required: false }
           - { label: "A Patologia — imagem de capa", name: "patologia_imagem", widget: "image", required: false }
           - { label: "A Patologia — legenda da imagem", name: "patologia_imagem_legenda", widget: "string", required: false }
+          - { label: "Liga de Patologia — texto de introdução", name: "liga_texto", widget: "text", required: false, hint: "Se vazio, usa um texto padrão." }

@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+
+const todos = await getCollection('eventos');
+const agora = new Date();
+
+const proximos = todos
+  .filter((e) => e.data.data >= agora)
+  .sort((a, b) => a.data.data.valueOf() - b.data.data.valueOf());
+
+const realizados = todos
+  .filter((e) => e.data.data < agora)
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+
+async function renderAll(entries: typeof todos) {
+  return Promise.all(entries.map(async (e) => ({ e, Content: (await e.render()).Content })));
+}
+const proximosR = await renderAll(proximos);
+const realizadosR = await renderAll(realizados);
+
+function formatData(d: Date) {
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+}
+---
+<Layout title="Eventos da Liga" backHref="/liga/" backLabel="Voltar para Liga de Patologia">
+  <style>
+    .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 28px; }
+    .section-h2 {
+      font-family: var(--sans); font-weight: 600; font-size: 18px; margin: 32px 0 16px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
+    }
+    .empty { font-size: 15px; color: var(--ink-soft); }
+
+    .event-card { border: 1px solid var(--line); background: #fff; padding: 20px 22px; margin-bottom: 18px; }
+    .event-card .tema { font-family: var(--sans); font-weight: 600; font-size: 17px; margin: 0 0 8px; }
+    .event-card .meta { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; line-height: 1.6; }
+    .event-card .meta strong { color: var(--ink); }
+    .event-card .resumo { font-size: 15px; line-height: 1.6; margin: 0 0 10px; max-width: 68ch; }
+    .event-card .professor { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); }
+
+    .pdf-link {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+      font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--accent);
+      text-decoration: none; border: 1px solid var(--accent); padding: 7px 14px;
+    }
+    .pdf-link:hover { background: var(--accent-soft); }
+
+    .gallery { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 16px; }
+    .g-item { width: 100%; }
+    .g-item .ph { width: 100%; aspect-ratio: 1/1; background: var(--accent-soft); border: 1px solid #C9D8D5; overflow: hidden; }
+    .g-item .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .g-item .cap-title { font-family: var(--sans); font-weight: 600; font-size: 12.5px; margin: 6px 0 2px; }
+    .g-item .cap-desc { font-family: var(--sans); font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+    @media (min-width: 600px) and (max-width: 959px) { .gallery { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .gallery { display: flex; flex-wrap: wrap; gap: 18px; } .g-item { width: 180px; } }
+  </style>
+
+  <h1 class="page-h1">Eventos da Liga</h1>
+
+  <h2 class="section-h2">Próximos eventos</h2>
+  {proximosR.length === 0 ? (
+    <p class="empty">Nenhum evento programado no momento.</p>
+  ) : (
+    proximosR.map(({ e }) => (
+      <div class="event-card">
+        <p class="tema">{e.data.tema}</p>
+        <p class="meta">
+          <strong>{formatData(e.data.data)}</strong>
+          {e.data.horario && <> · {e.data.horario}</>}
+          {e.data.local && <> · {e.data.local}</>}
+        </p>
+        {e.data.resumo && <p class="resumo">{e.data.resumo}</p>}
+        {e.data.professor && <p class="professor">Apresentação: {e.data.professor}</p>}
+      </div>
+    ))
+  )}
+
+  <h2 class="section-h2">Já realizados</h2>
+  {realizadosR.length === 0 ? (
+    <p class="empty">Nenhum evento realizado ainda.</p>
+  ) : (
+    realizadosR.map(({ e }) => (
+      <div class="event-card">
+        <p class="tema">{e.data.tema}</p>
+        <p class="meta">
+          <strong>{formatData(e.data.data)}</strong>
+          {e.data.horario && <> · {e.data.horario}</>}
+          {e.data.local && <> · {e.data.local}</>}
+        </p>
+        {e.data.resumo && <p class="resumo">{e.data.resumo}</p>}
+        {e.data.professor && <p class="professor">Apresentação: {e.data.professor}</p>}
+
+        {e.data.pdf && (
+          <a class="pdf-link" href={e.data.pdf} target="_blank" rel="noopener">Baixar material (PDF)</a>
+        )}
+
+        {e.data.galeria && e.data.galeria.length > 0 && (
+          <div class="gallery">
+            {e.data.galeria.map((g) => (
+              <div class="g-item">
+                <div class="ph"><img src={g.arquivo} alt={g.titulo} /></div>
+                <p class="cap-title">{g.titulo}</p>
+                {g.descricao && <p class="cap-desc">{g.descricao}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    ))
+  )}
+</Layout>

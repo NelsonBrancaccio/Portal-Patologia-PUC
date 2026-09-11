@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const todos = await getCollection('professores');
+const collator = new Intl.Collator('pt-BR');
+const ativos = todos.filter((p) => p.data.ativo).sort((a, b) => collator.compare(a.data.nome, b.data.nome));
+const historicos = todos.filter((p) => !p.data.ativo).sort((a, b) => collator.compare(a.data.nome, b.data.nome));
+---
+<Layout title="Professores" backHref="/" backLabel="Voltar para o início">
+  <style>
+    .page-h1 { font-family: var(--sans); font-weight: 600; font-size: 28px; margin: 4px 0 10px; }
+    .page-sub { font-size: 15.5px; color: var(--ink-soft); max-width: 60ch; margin: 0 0 28px; }
+    .section-h2 {
+      font-family: var(--sans); font-weight: 600; font-size: 18px; margin: 32px 0 12px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block;
+    }
+    .prof-row {
+      display: flex; align-items: center; gap: 16px; padding: 12px 6px;
+      border-bottom: 1px solid var(--paper-dim); text-decoration: none; color: var(--ink);
+    }
+    .prof-row:hover { background: var(--paper-dim); }
+    .prof-row .ph { width: 44px; aspect-ratio: 4/5; background: var(--accent-soft); border: 1px solid #C9D8D5; flex-shrink: 0; overflow: hidden; }
+    .prof-row .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prof-row .name { font-family: var(--sans); font-weight: 600; font-size: 15.5px; }
+    .empty { font-size: 15px; color: var(--ink-soft); }
+  </style>
+
+  <h1 class="page-h1">Professores de Patologia</h1>
+  <p class="page-sub">Quem já passou pela disciplina de Patologia na PUC-SP Sorocaba — clique num nome para ver a história completa.</p>
+
+  <h2 class="section-h2">Em atividade</h2>
+  {ativos.length === 0 ? (
+    <p class="empty">Nenhum professor cadastrado ainda.</p>
+  ) : (
+    ativos.map((p) => (
+      <a class="prof-row" href={`/professores/${p.slug}/`}>
+        <div class="ph">{p.data.foto && <img src={p.data.foto} alt={p.data.nome} />}</div>
+        <span class="name">{p.data.nome}</span>
+      </a>
+    ))
+  )}
+
+  <h2 class="section-h2">Já lecionaram</h2>
+  {historicos.length === 0 ? (
+    <p class="empty">Nenhum professor cadastrado ainda.</p>
+  ) : (
+    historicos.map((p) => (
+      <a class="prof-row" href={`/professores/${p.slug}/`}>
+        <div class="ph">{p.data.foto && <img src={p.data.foto} alt={p.data.nome} />}</div>
+        <span class="name">{p.data.nome}</span>
+      </a>
+    ))
+  )}
+</Layout>
