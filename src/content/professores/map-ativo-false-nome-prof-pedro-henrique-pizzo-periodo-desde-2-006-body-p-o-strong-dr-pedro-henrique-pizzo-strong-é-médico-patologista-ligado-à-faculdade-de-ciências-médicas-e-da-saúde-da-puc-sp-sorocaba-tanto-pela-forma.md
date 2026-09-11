@@ -1,5 +1,5 @@
 ---
-nome: Prof. Pedro Henrique Pizzo
+nome: Prof. Ms. Pedro Henrique Pizzo
 ativo: false
 periodo: desde 2.006
 ---
