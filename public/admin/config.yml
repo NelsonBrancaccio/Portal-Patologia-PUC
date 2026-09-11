@@ -142,7 +142,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Tema", name: "tema", widget: "string" }
-      - { label: "Data", name: "data", widget: "date" }
+      - { label: "Data", name: "data", widget: "datetime", time_format: false, date_format: "DD/MM/YYYY", format: "YYYY-MM-DD" }
       - { label: "Horário (ex: 19h, ou 19h–21h)", name: "horario", widget: "string", required: false }
       - { label: "Local", name: "local", widget: "string", required: false }
       - { label: "Resumo do tema", name: "resumo", widget: "text", required: false }
