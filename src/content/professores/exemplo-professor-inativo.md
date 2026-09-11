@@ -1,5 +1,5 @@
 ---
-nome: Nome do Professor (exemplo — já lecionou)
+nome: Dr. Walter Edgard Maffei
 foto: /imagens/professor-maffei.jpg
 ativo: false
 periodo: 1955 - 1991
