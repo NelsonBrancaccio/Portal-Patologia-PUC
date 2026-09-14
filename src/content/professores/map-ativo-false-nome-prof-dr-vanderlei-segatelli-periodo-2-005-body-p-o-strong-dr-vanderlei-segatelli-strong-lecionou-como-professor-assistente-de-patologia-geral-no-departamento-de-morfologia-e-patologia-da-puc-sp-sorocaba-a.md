@@ -1,7 +1,7 @@
 ---
 nome: "Prof. Dr. Vanderlei Segatelli "
 ativo: false
-periodo: "2.005"
+periodo: "2005"
 ---
 <p>O <strong>Dr. Vanderlei Segatelli</strong> lecionou como Professor Assistente de Patologia Geral no Departamento de Morfologia e Patologia da PUC-SP Sorocaba a partir de 2005, antes de migrar integralmente para os centros de alta complexidade em São Paulo.</p>
 
