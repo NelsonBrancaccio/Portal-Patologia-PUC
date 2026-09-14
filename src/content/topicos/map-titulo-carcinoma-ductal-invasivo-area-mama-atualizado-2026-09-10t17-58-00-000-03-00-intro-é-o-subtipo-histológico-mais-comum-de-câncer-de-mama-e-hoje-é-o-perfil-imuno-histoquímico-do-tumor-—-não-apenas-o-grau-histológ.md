@@ -5,6 +5,10 @@ atualizado: 2026-09-10T17:58:00.000-03:00
 intro: É o subtipo histológico mais comum de câncer de mama, e hoje é o perfil
   imuno-histoquímico do tumor — não apenas o grau histológico — que orienta a
   maior parte das decisões terapêuticas.
+imagem_principal: /imagens/4-portal-patologia-puc-mama—carcinoma-ductal-invasivo-ilustracao.jpg
+imagens_reais:
+  - arquivo: /imagens/4-portal-patologia-puc-mama—carcinoma-ductal-invasivo-localizacao.jpg
+    titulo: Carcinoma Ductal Invasivo - Ilustração
 ---
 <h2>Definição / conceito</h2>
 
