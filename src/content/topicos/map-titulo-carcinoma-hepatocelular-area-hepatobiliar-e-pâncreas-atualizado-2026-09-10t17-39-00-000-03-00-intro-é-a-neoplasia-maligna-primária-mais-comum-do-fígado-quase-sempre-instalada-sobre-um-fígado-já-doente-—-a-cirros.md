@@ -5,6 +5,10 @@ atualizado: 2026-09-10T17:39:00.000-03:00
 intro: É a neoplasia maligna primária mais comum do fígado, quase sempre
   instalada sobre um fígado já doente — a cirrose é o principal fator de risco,
   seja qual for sua causa de base.
+imagem_principal: /imagens/3-portal-patologia-puc-hepatobiliar-e-pancreas-carcinoma-hepatocelular-ilustracao.jpg
+imagens_reais:
+  - titulo: Carcinoma Hepatocelular - Ilustração
+    arquivo: /imagens/3-portal-patologia-puc-hepatobiliar-e-pancreas-carcinoma-hepatocelular-localizacao.jpg
 ---
 <h2>Definição / conceito</h2>
 
