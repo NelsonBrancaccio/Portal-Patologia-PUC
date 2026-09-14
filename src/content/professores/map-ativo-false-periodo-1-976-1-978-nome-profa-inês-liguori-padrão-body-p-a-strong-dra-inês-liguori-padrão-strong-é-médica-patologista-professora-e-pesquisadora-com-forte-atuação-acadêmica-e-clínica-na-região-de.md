@@ -1,7 +1,7 @@
 ---
 nome: Profa.  Inês Liguori Padrão
 ativo: false
-periodo: 1.976 - 1.978
+periodo: 1976 - 1978
 ---
 <p>A <strong>Dra. Inês Liguori Padrão</strong> é médica patologista, professora e pesquisadora com forte atuação acadêmica e clínica na região de Sorocaba e Votorantim.</p>
 
