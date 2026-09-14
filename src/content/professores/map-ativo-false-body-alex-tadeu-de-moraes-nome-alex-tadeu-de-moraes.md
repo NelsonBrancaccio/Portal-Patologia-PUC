@@ -1,7 +1,7 @@
 ---
 nome: Prof. Alex Tadeu de Moraes
 ativo: false
-periodo: 1.990 - 2.000
+periodo: 1990 - 2000
 ---
 <p>O <strong>Dr. Alex Tadeu de Moraes</strong> integra a história da disciplina de Patologia da Faculdade de Ciências Médicas e da Saúde da PUC-SP Sorocaba, tendo atuado como Auxiliar de Ensino ao lado da Dra. Inês Liguori Padrão durante os anos 1990 e 2000.</p>
 
