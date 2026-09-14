@@ -1,7 +1,7 @@
 ---
 nome: Prof. Ms. Pedro Henrique Pizzo
 ativo: true
-periodo: desde 2.006
+periodo: desde 2006
 ---
 <p>O <strong>Dr. Pedro Henrique Pizzo</strong> é médico patologista ligado à Faculdade de Ciências Médicas e da Saúde da PUC-SP Sorocaba, tanto pela formação quanto pela atuação atual no corpo docente.</p>
 
