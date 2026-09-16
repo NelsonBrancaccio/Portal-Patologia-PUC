@@ -12,15 +12,11 @@ imagens_reais:
 ---
 <h2>Definição / conceito</h2>
 
-<p>Subtipo mais comum de carcinoma de tireoide (cerca de 80–85% dos casos), derivado das células foliculares,
-
-geralmente de crescimento lento e com excelente prognóstico global.</p>
+<p>Subtipo mais comum de carcinoma de tireoide (cerca de 80–85% dos casos), derivado das células foliculares, geralmente de crescimento lento e com excelente prognóstico global.</p>
 
 <h2>Quadro clínico</h2>
 
-<p>Nódulo tireoidiano assintomático, frequentemente achado incidental em exame de imagem cervical. Linfadenopatia
-
-cervical pode ser, em alguns casos, a primeira manifestação percebida.</p>
+<p>Nódulo tireoidiano assintomático, frequentemente achado incidental em exame de imagem cervical. Linfadenopatia cervical pode ser, em alguns casos, a primeira manifestação percebida.</p>
 
 <h2>Diagnóstico</h2>
 
@@ -48,21 +44,15 @@ cervical pode ser, em alguns casos, a primeira manifestação percebida.</p>
 
 </div>
 
-<p>Esses achados, por si só, definem o diagnóstico, independentemente de a arquitetura papilar estar ou não
-
-presente.</p>
+<p>Esses achados, por si só, definem o diagnóstico, independentemente de a arquitetura papilar estar ou não presente.</p>
 
 <h3>Estadiamento</h3>
 
-<p>Segue o sistema TNM (AJCC/UICC, 8ª edição) — particularidade importante: a idade do paciente (acima ou abaixo de
-
-55 anos) entra diretamente na definição do estágio, algo incomum entre os tumores sólidos.</p>
+<p>Segue o sistema TNM (AJCC/UICC, 8ª edição) — particularidade importante: a idade do paciente (acima ou abaixo de 55 anos) entra diretamente na definição do estágio, algo incomum entre os tumores sólidos.</p>
 
 <h2>Relevância prática</h2>
 
-<p>O diagnóstico é essencialmente baseado nas características nucleares, não no padrão arquitetural — por isso
-
-existem variantes foliculares do carcinoma papilífero (sem papilas verdadeiras), clinicamente relevantes de se
+<p>O diagnóstico é essencialmente baseado nas características nucleares, não no padrão arquitetural — por isso existem variantes foliculares do carcinoma papilífero (sem papilas verdadeiras), clinicamente relevantes de se
 
 reconhecer.</p>
 
