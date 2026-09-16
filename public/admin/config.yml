@@ -2,7 +2,7 @@ backend:
   name: git-gateway
   branch: main
 
-publish_mode: editorial_workflow
+publish_mode: simple
 
 media_folder: "public/imagens"
 public_folder: "/imagens"
@@ -11,8 +11,9 @@ collections:
   - name: "topicos"
     label: "Tópicos"
     folder: "src/content/topicos"
+    identifier_field: "titulo"
+    slug: "{{fields.titulo}}"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Título", name: "titulo", widget: "string" }
       - label: "Área"
@@ -61,8 +62,9 @@ collections:
   - name: "professores"
     label: "Professores"
     folder: "src/content/professores"
+    identifier_field: "nome"
+    slug: "{{fields.nome}}"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Nome", name: "nome", widget: "string" }
       - { label: "Foto", name: "foto", widget: "image", required: false }
@@ -121,8 +123,9 @@ collections:
   - name: "liga_membros"
     label: "Liga de Patologia — Gestão"
     folder: "src/content/liga_membros"
+    identifier_field: "nome"
+    slug: "{{fields.nome}}"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Nome", name: "nome", widget: "string" }
       - { label: "Foto", name: "foto", widget: "image", required: false }
@@ -138,8 +141,9 @@ collections:
   - name: "eventos"
     label: "Liga de Patologia — Eventos"
     folder: "src/content/eventos"
+    identifier_field: "tema"
+    slug: "{{fields.tema}}"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Tema", name: "tema", widget: "string" }
       - { label: "Data", name: "data", widget: "datetime", time_format: false, date_format: "DD/MM/YYYY", format: "YYYY-MM-DD" }
