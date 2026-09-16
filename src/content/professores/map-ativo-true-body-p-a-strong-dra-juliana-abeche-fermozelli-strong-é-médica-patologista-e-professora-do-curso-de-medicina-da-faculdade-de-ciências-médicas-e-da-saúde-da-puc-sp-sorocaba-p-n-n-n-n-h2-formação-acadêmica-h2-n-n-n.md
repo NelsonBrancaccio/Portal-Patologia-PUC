@@ -1,5 +1,5 @@
 ---
-nome: Dra. Juliana Abeche Fermozelli
+nome: Prof.ª Dra. Juliana Abeche Fermozelli
 ativo: true
 periodo: desde 2013
 ---
