@@ -1,5 +1,5 @@
 ---
-nome: Profa. Dra. Maria Lourdes Peris Barbo
+nome: Prof.ª Dra. Maria Lourdes Peris Barbo
 ativo: true
 periodo: desde 1.986
 ---
