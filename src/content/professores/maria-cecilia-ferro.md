@@ -2,7 +2,7 @@
 nome: Prof.ª Dra. Maria Cecília Ferro
 foto: /imagens/professora-cecília-ferro.jpg
 ativo: false
-periodo: 1.971 - 2.018
+periodo: 1971 - 2018
 ---
 <p>A <strong>Dra. Maria Cecília Ferro</strong> foi uma das figuras mais emblemáticas, queridas e respeitadas da história da Faculdade de Ciências Médicas e da Saúde (FCMS) da PUC-SP em Sorocaba. Médica patologista e professora-titular do Departamento de Morfologia e Patologia, faleceu em dezembro de 2018, aos 72 anos, deixando um legado marcante para gerações de médicos formados na região.</p>
 
