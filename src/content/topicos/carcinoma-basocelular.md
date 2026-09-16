@@ -11,17 +11,11 @@ imagens_reais:
 ---
 <h2>Definição / conceito</h2>
 
-<p>Neoplasia maligna cutânea mais comum, originada das células basais da epiderme, de crescimento lento e baixíssimo
-
-potencial de metástase, fortemente associada à exposição solar cumulativa.</p>
+<p>Neoplasia maligna cutânea mais comum, originada das células basais da epiderme, de crescimento lento e baixíssimo potencial de metástase, fortemente associada à exposição solar cumulativa.</p>
 
 <h2>Quadro clínico</h2>
 
-<p>Pápula ou nódulo perolado, com telangiectasias visíveis na superfície, podendo ulcerar centralmente (a clássica
-
-"úlcera rodente") em lesões mais avançadas. É mais comum em áreas fotoexpostas, especialmente a face, no nariz e na
-
-região periocular.</p>
+<p>Pápula ou nódulo perolado, com telangiectasias visíveis na superfície, podendo ulcerar centralmente (a clássica "úlcera rodente") em lesões mais avançadas. É mais comum em áreas fotoexpostas, especialmente a face, no nariz e na região periocular.</p>
 
 <h2>Diagnóstico</h2>
 
@@ -31,11 +25,7 @@ região periocular.</p>
 
 <h3>Achados microscópicos</h3>
 
-<p>Ninhos de células basaloides com núcleos hipercromáticos, em disposição periférica característica em paliçada,
-
-com uma fenda de retração entre o tumor e o estroma adjacente — achado que auxilia bastante o diagnóstico
-
-diferencial.</p>
+<p>Ninhos de células basaloides com núcleos hipercromáticos, em disposição periférica característica em paliçada, com uma fenda de retração entre o tumor e o estroma adjacente — achado que auxilia bastante o diagnóstico diferencial.</p>
 
 <div class="callout">
 
@@ -55,9 +45,7 @@ diferencial.</p>
 
 <h2>Relevância prática</h2>
 
-<p>A avaliação das margens cirúrgicas é o principal determinante de recidiva local. Subtipos mais infiltrativos
-
-costumam exigir técnicas cirúrgicas específicas, como a cirurgia micrográfica de Mohs.</p>
+<p>A avaliação das margens cirúrgicas é o principal determinante de recidiva local. Subtipos mais infiltrativos costumam exigir técnicas cirúrgicas específicas, como a cirurgia micrográfica de Mohs.</p>
 
 <h2>Referências</h2>
 
