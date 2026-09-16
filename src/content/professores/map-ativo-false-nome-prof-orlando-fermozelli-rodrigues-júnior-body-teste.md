@@ -3,7 +3,23 @@ nome: Prof. Orlando Fermozelli Rodrigues Júnior
 ativo: false
 periodo: 1980 - 1990
 ---
-<p>O <strong>Dr. Orlando Fermozelli Rodrigues Júnior</strong> é médico patologista atuante em Sorocaba, com sólida experiência em medicina diagnóstica, sendo especialista tanto em Anatomia Patológica quanto em Patologia Clínica.</p>
+<p>O <strong>Dr. Orlando Fermozelli Rodrigues Júnior</strong> é médico patologista atuante em Sorocaba, com sólida experiência em medicina diagnóstica, especialista em Anatomia Patológica pela Irmandade da Santa Casa de Misericórdia de São Paulo (ISCMSP).</p>
+
+
+
+<h2>Formação e Carreira Acadêmica</h2>
+
+
+
+<ul>
+
+  <li><strong>Título de Especialista:</strong> Título de Especialista em Patologia pela Sociedade Brasileira de Patologia (SBP), 2013.</li>
+
+  <li><strong>Docência:</strong> Integrou o corpo docente da Faculdade de Ciências Médicas e da Saúde da PUC-SP (Campus Sorocaba) como Auxiliar de Ensino na disciplina de Patologia, entre 1984 e 2017, contribuindo para a formação de novas gerações de médicos na área.</li>
+
+  <li><strong>Medicina Legal:</strong> Atuou como Médico Legista no Instituto Médico Legal (IML), vinculado à Superintendência da Polícia Técnico-Científica do Estado de São Paulo, entre 1984 e 2018.</li>
+
+</ul>
 
 
 
@@ -13,19 +29,9 @@ periodo: 1980 - 1990
 
 <ul>
 
-  <li><strong>Anatomopatologista:</strong> responsável por analisar biópsias, peças cirúrgicas e amostras de tecidos para diagnóstico de doenças, incluindo cânceres e patologias complexas.</li>
-
-  <li><strong>Patologista Clínico:</strong> atua na gestão e interpretação de exames laboratoriais de análises clínicas.</li>
+  <li><strong>Anatomopatologista:</strong> Responsável por analisar biópsias, peças cirúrgicas e amostras de tecidos para diagnóstico de doenças, incluindo cânceres e patologias complexas.</li>
 
 </ul>
-
-
-
-<h2>Carreira Acadêmica</h2>
-
-
-
-<p>Além do trabalho em laboratórios e hospitais da região, integrou o corpo docente da Faculdade de Ciências Médicas e da Saúde da PUC-SP (Campus Sorocaba) como auxiliar de ensino na disciplina de Patologia, contribuindo para a formação de novas gerações de médicos na área.</p>
 
 
 
@@ -33,4 +39,12 @@ periodo: 1980 - 1990
 
 
 
-<p>Atuou em análises, exames e consultas em Sorocaba, com histórico de atendimento em locais como o Hospital Evangélico de Sorocaba e o Instituto de Patologia e Citologia de Sorocaba.</p>
+<p>Atua em análises, exames e consultas em Sorocaba, com histórico de atendimento em locais como o Hospital Evangélico de Sorocaba, o Hospital Unimed e o Instituto de Patologia e Citologia de Sorocaba.</p>
+
+
+
+<div class="callout">
+
+<p>Sua trajetória combina a prática da Patologia diagnóstica com a Medicina Legal, atuando por mais de três décadas na formação de médicos e na perícia técnico-científica em Sorocaba.</p>
+
+</div>
