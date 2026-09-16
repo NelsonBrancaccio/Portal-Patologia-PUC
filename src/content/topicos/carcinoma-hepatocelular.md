@@ -12,35 +12,21 @@ imagens_reais:
 ---
 <h2>Definição / conceito</h2>
 
-<p>Neoplasia maligna primária mais comum do fígado, derivada dos hepatócitos, fortemente associada a cirrose de
-
-qualquer etiologia — hepatites B e C crônicas, doença hepática alcoólica e esteato-hepatite não alcoólica são os
-
-principais fatores de risco.</p>
+<p>Neoplasia maligna primária mais comum do fígado, derivada dos hepatócitos, fortemente associada a cirrose de qualquer etiologia — hepatites B e C crônicas, doença hepática alcoólica e esteato-hepatite não alcoólica são os principais fatores de risco.</p>
 
 <h2>Quadro clínico</h2>
 
-<p>Frequentemente assintomático em fases iniciais, detectado por rastreamento em pacientes cirróticos
-
-(ultrassonografia associada à dosagem de alfafetoproteína). Em fases avançadas: dor no hipocôndrio direito, perda de
-
-peso, ascite e icterícia, muitas vezes concomitantes à descompensação da doença hepática de base.</p>
+<p>Frequentemente assintomático em fases iniciais, detectado por rastreamento em pacientes cirróticos (ultrassonografia associada à dosagem de alfafetoproteína). Em fases avançadas: dor no hipocôndrio direito, perda de peso, ascite e icterícia, muitas vezes concomitantes à descompensação da doença hepática de base.</p>
 
 <h2>Diagnóstico</h2>
 
 <h3>Achados macroscópicos</h3>
 
-<p>Nódulo único, multifocal ou, menos comumente, padrão infiltrativo difuso, com coloração amarelo-esverdeada ou
-
-biliosa e áreas de necrose e hemorragia. Invasão da veia porta é achado relativamente comum e de grande importância
-
-prognóstica.</p>
+<p>Nódulo único, multifocal ou, menos comumente, padrão infiltrativo difuso, com coloração amarelo-esverdeada ou biliosa e áreas de necrose e hemorragia. Invasão da veia porta é achado relativamente comum e de grande importância prognóstica.</p>
 
 <h3>Achados microscópicos</h3>
 
-<p>Células poligonais com citoplasma eosinofílico, dispostas em padrão trabecular, pseudoglandular ou compacto. A
-
-produção de bile intracelular, quando presente, é achado de grande valor diagnóstico.</p>
+<p>Células poligonais com citoplasma eosinofílico, dispostas em padrão trabecular, pseudoglandular ou compacto. A produção de bile intracelular, quando presente, é achado de grande valor diagnóstico.</p>
 
 <div class="callout">
 
@@ -60,11 +46,7 @@ produção de bile intracelular, quando presente, é achado de grande valor diag
 
 <h2>Relevância prática</h2>
 
-<p>O estadiamento — invasão vascular, número e tamanho dos nódulos — combinado à função hepática de base (escore de
-
-Child-Pugh) é o que determina a elegibilidade para ressecção cirúrgica, transplante ou terapias locorregionais, mais
-
-do que o grau histológico isolado.</p>
+<p>O estadiamento — invasão vascular, número e tamanho dos nódulos — combinado à função hepática de base (escore de Child-Pugh) é o que determina a elegibilidade para ressecção cirúrgica, transplante ou terapias locorregionais, mais do que o grau histológico isolado.</p>
 
 <h2>Referências</h2>
 
