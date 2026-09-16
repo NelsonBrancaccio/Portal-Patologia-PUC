@@ -1,5 +1,5 @@
 ---
-nome: Profa. Dra. Maria Cecília Ferro
+nome: Prof.ª Dra. Maria Cecília Ferro
 foto: /imagens/professora-cecília-ferro.jpg
 ativo: false
 periodo: 1.971 - 2.018
