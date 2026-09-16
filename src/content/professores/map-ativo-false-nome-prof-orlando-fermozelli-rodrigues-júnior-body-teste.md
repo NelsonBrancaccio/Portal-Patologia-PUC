@@ -1,7 +1,7 @@
 ---
 nome: Prof. Orlando Fermozelli Rodrigues Júnior
 ativo: false
-periodo: 1980 - 1990
+periodo: 1984 - 2017
 ---
 <p>O <strong>Dr. Orlando Fermozelli Rodrigues Júnior</strong> é médico patologista atuante em Sorocaba, com sólida experiência em medicina diagnóstica, especialista em Anatomia Patológica pela Irmandade da Santa Casa de Misericórdia de São Paulo (ISCMSP).</p>
 
