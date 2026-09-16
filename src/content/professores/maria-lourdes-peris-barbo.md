@@ -1,7 +1,7 @@
 ---
-nome: Profa. Dra. Maria Lourdes Peris Barbo
+nome: Prof.ª Dra. Maria Lourdes Peris Barbo
 ativo: true
-periodo: desde 1.986
+periodo: desde 1986
 ---
 <p>A <strong>Dra. Maria Lourdes Peris Barbo</strong> é uma das professoras mais tradicionais da Faculdade de Ciências Médicas e da Saúde da PUC-SP (Campus Sorocaba), com uma carreira de décadas dedicada ao ensino médico e à pesquisa em Patologia, com ênfase em Dermatopatologia.</p>
 
