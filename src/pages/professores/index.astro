@@ -4,8 +4,18 @@ import Layout from '../../layouts/Layout.astro';
 
 const todos = await getCollection('professores');
 const collator = new Intl.Collator('pt-BR');
-const ativos = todos.filter((p) => p.data.ativo).sort((a, b) => collator.compare(a.data.nome, b.data.nome));
-const historicos = todos.filter((p) => !p.data.ativo).sort((a, b) => collator.compare(a.data.nome, b.data.nome));
+
+// Remove títulos (Prof., Prof.ª, Profa., Dr., Dra.) do início do nome só
+// para fins de ordenação — a exibição continua usando o nome completo.
+function nomeParaOrdenacao(nome: string) {
+  return nome.replace(/^(Prof\.?ª?\s*|Profa\.?\s*|Dra?\.?\s*)+/i, '').trim();
+}
+
+const porNome = (a: (typeof todos)[number], b: (typeof todos)[number]) =>
+  collator.compare(nomeParaOrdenacao(a.data.nome), nomeParaOrdenacao(b.data.nome));
+
+const ativos = todos.filter((p) => p.data.ativo).sort(porNome);
+const historicos = todos.filter((p) => !p.data.ativo).sort(porNome);
 
 function firstParagraph(md: string) {
   // Remove tags HTML primeiro (o conteúdo do /admin vem em HTML, com cada
