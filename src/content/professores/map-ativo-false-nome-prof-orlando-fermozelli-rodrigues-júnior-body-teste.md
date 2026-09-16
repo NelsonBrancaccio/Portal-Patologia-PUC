@@ -5,11 +5,7 @@ periodo: 1984 - 2017
 ---
 <p>O <strong>Dr. Orlando Fermozelli Rodrigues Júnior</strong> é médico patologista atuante em Sorocaba, com sólida experiência em medicina diagnóstica, especialista em Anatomia Patológica pela Irmandade da Santa Casa de Misericórdia de São Paulo (ISCMSP).</p>
 
-
-
 <h2>Formação e Carreira Acadêmica</h2>
-
-
 
 <ul>
 
@@ -21,11 +17,7 @@ periodo: 1984 - 2017
 
 </ul>
 
-
-
 <h2>Atuação Profissional</h2>
-
-
 
 <ul>
 
@@ -33,18 +25,6 @@ periodo: 1984 - 2017
 
 </ul>
 
-
-
 <h2>Atendimento na Região</h2>
 
-
-
-<p>Atua em análises, exames e consultas em Sorocaba, com histórico de atendimento em locais como o Hospital Evangélico de Sorocaba, o Hospital Unimed e o Instituto de Patologia e Citologia de Sorocaba.</p>
-
-
-
-<div class="callout">
-
-<p>Sua trajetória combina a prática da Patologia diagnóstica com a Medicina Legal, atuando por mais de três décadas na formação de médicos e na perícia técnico-científica em Sorocaba.</p>
-
-</div>
+<p>Atua em análises, exames e consultas em Sorocaba, com histórico de atendimento em locais como o Hospital Evangélico de Sorocaba, Hospital Unimed e o Instituto de Patologia e Citologia de Sorocaba.</p>
