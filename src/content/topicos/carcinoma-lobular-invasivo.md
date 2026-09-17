@@ -46,9 +46,7 @@ ductal</li>
 
 </div>
 
-<li>Perda de expressão de E-caderina — distingue do carcinoma ductal invasivo, que mantém</p>
-
-<li>Receptores de estrogênio e progesterona, HER2, Ki-67 — mesmo painel de rotina do carcinoma</p>
+<li>Perda de expressão de E-caderina — distingue do carcinoma ductal invasivo, que mantém<li><li>Receptores de estrogênio e progesterona, HER2, Ki-67 — mesmo painel de rotina do carcinoma<li>
 
 <h4>Estadiamento</h4>
 
