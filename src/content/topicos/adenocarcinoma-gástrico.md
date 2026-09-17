@@ -15,9 +15,7 @@ imagens_reais:
 ---
 <h2>Definição / conceito</h2>
 
-<p>Neoplasia maligna originada do epitélio glandular gástrico. Classifica-se histologicamente em dois padrões principais pela classificação de Lauren: tipo intestinal (formador de glândulas, associado a gastrite crônica e H. pylori) e tipo difuso (células em anel de sinete,
-
-infiltrativo, sem formação glandular).</p>
+<p>Neoplasia maligna originada do epitélio glandular gástrico. Classifica-se histologicamente em dois padrões principais pela classificação de Lauren: tipo intestinal (formador de glândulas, associado a gastrite crônica e H. pylori) e tipo difuso (células em anel de sinete, infiltrativo, sem formação glandular).</p>
 
 <h2>Quadro clínico</h2>
 
@@ -49,17 +47,11 @@ infiltrativo, sem formação glandular).</p>
 
 <h4>Estadiamento</h4>
 
-<p>Sistema TNM (AJCC/UICC, 8ª edição), baseado na profundidade de invasão da parede gástrica,
-
-envolvimento linfonodal e metástases à distância.</p>
+<p>Sistema TNM (AJCC/UICC, 8ª edição), baseado na profundidade de invasão da parede gástrica, envolvimento linfonodal e metástases à distância.</p>
 
 <h2>Relevância prática</h2>
 
-<p>A queda global na incidência do subtipo intestinal acompanha o controle da infecção por H.
-
-pylori — um dos exemplos mais didáticos de neoplasia sólida com agente etiológico infeccioso
-
-bem estabelecido e potencialmente prevenível.</p>
+<p>A queda global na incidência do subtipo intestinal acompanha o controle da infecção por H. pylori — um dos exemplos mais didáticos de neoplasia sólida com agente etiológico infeccioso bem estabelecido e potencialmente prevenível.</p>
 
 <h2>Referências</h2>
 
