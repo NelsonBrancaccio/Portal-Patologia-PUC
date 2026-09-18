@@ -1,0 +1,107 @@
+---
+// src/pages/topicos/area/[area].astro
+//
+// Página de índice por área (ex: /topicos/area/mama/), gerada a partir do
+// campo `area` de cada tópico (definido em AREAS, em src/content/config.ts).
+//
+// Só LÊ a coleção 'topicos' via getCollection — nada em src/content/ é
+// criado, editado ou apagado. O conteúdo já publicado no painel não é
+// afetado por esta página.
+
+import { getCollection } from 'astro:content';
+import { AREAS } from '../../../content/config';
+import Layout from '../../../layouts/Layout.astro';
+import { slugifyArea } from '../../../utils/slug';
+
+export async function getStaticPaths() {
+  const topicos = await getCollection('topicos');
+  return AREAS.map((area) => ({
+    params: { area: slugifyArea(area) },
+    props: {
+      area,
+      itens: topicos
+        .filter((t) => t.data.area === area)
+        .sort((a, b) => a.data.titulo.localeCompare(b.data.titulo, 'pt-BR')),
+    },
+  }));
+}
+
+const { area, itens } = Astro.props;
+---
+<Layout title={area} activeArea={area} backHref="/topicos/" backLabel="Voltar para Tópicos">
+  <style>
+    .crumb { font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); margin-bottom: 18px; }
+    .crumb a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--line); }
+
+    .titlerow { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 6px; }
+    .titlerow h1 { font-family: var(--serif); font-weight: 700; font-size: 36px; line-height: 1.2; margin: 0; }
+    .titlerow .count { font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); }
+    .underline { width: 52px; height: 3px; background: var(--accent); margin: 0 0 26px; }
+
+    .search-box { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); padding: 10px 14px; margin: 0 0 28px; }
+    .search-box input { border: none; outline: none; background: transparent; font-family: var(--sans); font-size: 14px; color: var(--ink); flex-grow: 1; }
+
+    .topic-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+    .topic-card { display: flex; gap: 18px; background: #fff; border: 1px solid var(--line); padding: 18px 20px; text-decoration: none; }
+    .topic-card:hover { border-color: var(--accent); }
+
+    .thumb { width: 84px; height: 84px; flex-shrink: 0; object-fit: cover; }
+    .thumb-fallback { background: #F1DCD3; }
+
+    .topic-card-title { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin: 0 0 5px; }
+    .topic-card-intro { margin: 0; font-family: var(--sans); font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+
+    .empty { font-family: var(--sans); font-size: 15px; color: var(--ink-soft); }
+  </style>
+
+  <div class="crumb"><a href="/topicos/">Tópicos</a> › {area}</div>
+
+  <div class="titlerow">
+    <h1>{area}</h1>
+    <span class="count">{itens.length} tópico{itens.length !== 1 ? 's' : ''} publicado{itens.length !== 1 ? 's' : ''}</span>
+  </div>
+  <div class="underline"></div>
+
+  {itens.length > 0 && (
+    <div class="search-box">
+      <input id="busca-area" type="search" aria-label={`Buscar em ${area}`} placeholder={`Buscar em ${area}...`} />
+    </div>
+  )}
+
+  {itens.length === 0 ? (
+    <p class="empty">Nenhum tópico publicado ainda nesta área.</p>
+  ) : (
+    <ul class="topic-list" id="lista-topicos">
+      {itens.map((t) => {
+        const localizacao = t.data.imagens_reais?.[0];
+        return (
+          <li data-titulo={t.data.titulo.toLowerCase()}>
+            <a href={`/topicos/${t.slug}/`} class="topic-card">
+              {localizacao ? (
+                <img class="thumb" src={localizacao.arquivo} alt="" width="84" height="84" loading="lazy" />
+              ) : (
+                <div class="thumb thumb-fallback" aria-hidden="true"></div>
+              )}
+              <div>
+                <p class="topic-card-title">{t.data.titulo}</p>
+                <p class="topic-card-intro">{t.data.intro}</p>
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  )}
+</Layout>
+
+<script>
+  const input = document.getElementById('busca-area') as HTMLInputElement | null;
+  const itens = document.querySelectorAll<HTMLLIElement>('#lista-topicos > li');
+  input?.addEventListener('input', () => {
+    const termo = input.value.trim().toLowerCase();
+    itens.forEach((item) => {
+      const titulo = item.dataset.titulo ?? '';
+      item.style.display = titulo.includes(termo) ? '' : 'none';
+    });
+  });
+</script>
