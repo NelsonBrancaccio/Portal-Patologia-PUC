@@ -1,6 +1,7 @@
 ---
 import { AREAS } from '../content/config';
 import { getCollection } from 'astro:content';
+import { slugifyArea } from '../utils/slug';
 
 interface Props {
   title: string;
@@ -225,7 +226,7 @@ const searchIndex = topicos.map((t) => ({
       {porArea.map(({ area, itens }) => (
         <details class={`area-block ${area === activeArea ? 'active' : ''}`} open={area === activeArea}>
           <summary>
-            <span>{area}</span>
+            <a href={`/topicos/area/${slugifyArea(area)}/`} style="color:inherit;text-decoration:none;">{area}</a>
             <span class="chev">›</span>
           </summary>
           {itens.length === 0 ? (
