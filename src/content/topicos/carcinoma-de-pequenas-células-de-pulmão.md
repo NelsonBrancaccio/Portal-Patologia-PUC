@@ -1,6 +1,6 @@
 ---
 titulo: Carcinoma de Pequenas Células de Pulmão
-area: Pulmonar
+area: Patologia Geral
 atualizado: 2026-09-18T13:36:00.000-03:00
 intro: >-
   Biologicamente, é um câncer diferente de todos os outros tipos de câncer de
