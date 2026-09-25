@@ -1,6 +1,6 @@
 ---
 titulo: Carcinoma Epidermoide de Pulmão
-area: Patologia Geral
+area: Respiratório
 atualizado: 2026-09-17T14:23:00.000-03:00
 intro: >-
   O subtipo de câncer de pulmão mais fortemente ligado ao tabagismo — e o que
