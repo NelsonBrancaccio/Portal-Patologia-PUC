@@ -1,6 +1,6 @@
 ---
 titulo: Adenocarcinoma de Pulmão
-area: Pulmonar
+area: Patologia Geral
 atualizado: 2026-09-16T14:48:00.000-03:00
 intro: "Hoje o subtipo mais comum de câncer de pulmão, com uma particularidade
   importante: o tratamento em doença avançada é definido tanto pelo perfil
