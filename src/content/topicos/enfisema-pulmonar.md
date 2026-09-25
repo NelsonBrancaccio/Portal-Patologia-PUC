@@ -1,6 +1,6 @@
 ---
 titulo: Enfisema Pulmonar
-area: Patologia Geral
+area: Respiratório
 atualizado: 2026-09-23T16:48:00.000-03:00
 intro: >-
   Uma doença em que o pulmão não fica cheio de secreção ou tumor — ele
