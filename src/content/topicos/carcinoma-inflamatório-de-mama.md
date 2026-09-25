@@ -1,6 +1,6 @@
 ---
 titulo: Carcinoma Inflamatório de Mama
-area: Mama
+area: Ginecológica
 atualizado: 2026-09-18T13:29:00.000-03:00
 intro: >-
   Uma das formas mais agressivas de câncer de mama — e uma das mais fáceis de
