@@ -1,6 +1,6 @@
 ---
 titulo: Carcinoma Ductal Invasivo
-area: Mama
+area: Ginecológica
 atualizado: 2026-09-16T14:55:00.000-03:00
 intro: É o subtipo histológico mais comum de câncer de mama, e hoje é o perfil
   imuno-histoquímico do tumor — não apenas o grau histológico — que orienta a
