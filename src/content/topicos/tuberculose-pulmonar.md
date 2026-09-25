@@ -1,6 +1,6 @@
 ---
 titulo: Tuberculose Pulmonar
-area: Pulmonar
+area: Patologia Geral
 atualizado: 2026-09-18T17:12:00.000-03:00
 intro: |-
   Uma infecção que consegue conviver com o sistema imune por décadas antes de se
