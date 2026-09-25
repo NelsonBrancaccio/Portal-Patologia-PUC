@@ -1,18 +1,20 @@
 import { defineCollection, z } from 'astro:content';
 
 // Ordem alfabética — usada no menu lateral e em qualquer listagem de áreas.
+// Atualizado: "Mama" foi unificada em "Ginecológica"; "Pulmonar" virou
+// "Respiratório"; "Cardio Circulatório" é a área nova (primeira alfabética).
 export const AREAS = [
+  'Cardio Circulatório',
   'Citopatologia',
   'Endócrina',
   'Ginecológica',
   'Hematológica e Linfonodal',
   'Hepatobiliar e Pâncreas',
-  'Mama',
   'Óssea e Partes Moles',
   'Patologia Geral',
   'Pele',
-  'Pulmonar',
   'Renal e Trato Urinário',
+  'Respiratório',
   'Sistema Nervoso',
   'Trato Gastrointestinal'
 ] as const;
@@ -127,4 +129,40 @@ const configuracoes = defineCollection({
   })
 });
 
-export const collections = { topicos, professores, institucional, divulgacao, liga_membros, eventos, configuracoes };
+// ===== NOVO: Museu da Patologia — cadastro de peças físicas =====
+const pecas_museu = defineCollection({
+  type: 'content',
+  schema: z.object({
+    // Código gerado pela planilha do museu, ex: "01-COR-001". Usado como slug.
+    codigo: z.string(),
+    // Tópicos do portal relacionados a esta peça (many-to-many via widget "relation").
+    // Guarda o título exato do tópico (mesmo valor de topicos.titulo).
+    topicos_relacionados: z.array(z.string()).optional(),
+    orgao: z.string(),
+    descricao: z.string().optional(),
+    achado: z.string().optional(),
+    data_incorporacao: z.date().optional(),
+    estado_conservacao: z.enum(['Bom', 'Regular', 'Requer atenção']).optional(),
+    localizacao_fisica: z.string().optional(),
+    observacoes: z.string().optional(),
+    // Número físico na etiqueta da lâmina no sistema Target (texto livre),
+    // quando a peça tiver lâmina de biópsia ou citologia associada.
+    numero_target: z.string().optional(),
+    // Primeira foto da lista = capa/miniatura da peça.
+    fotos: z.array(z.object({
+      arquivo: z.string(),
+      legenda: z.string().optional()
+    })).optional()
+  })
+});
+
+export const collections = {
+  topicos,
+  professores,
+  institucional,
+  divulgacao,
+  liga_membros,
+  eventos,
+  configuracoes,
+  pecas_museu
+};

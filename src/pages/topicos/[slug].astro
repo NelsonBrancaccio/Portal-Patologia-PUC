@@ -12,6 +12,11 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+
+// NOVO: peças do museu que citam este tópico em "topicos_relacionados"
+const pecasRelacionadas = (await getCollection('pecas_museu')).filter((p) =>
+  (p.data.topicos_relacionados || []).includes(entry.data.titulo)
+);
 ---
 <Layout title={entry.data.titulo} activeArea={entry.data.area} backHref="/topicos/" backLabel="Voltar para Tópicos">
   <style>
@@ -47,6 +52,16 @@ const { Content } = await entry.render();
     .g-item .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .g-item .cap-title { font-family: var(--sans); font-weight: 600; font-size: 13px; margin: 8px 0 2px; }
     .g-item .cap-desc { font-family: var(--sans); font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+
+    /* NOVO: Peças do Acervo Relacionadas */
+    .pecas-relacionadas { padding-top: 22px; margin-top: 34px; border-top: 1px solid var(--line); }
+    .pecas-relacionadas h3 { font-family: var(--sans); font-weight: 600; font-size: 12.5px; letter-spacing: 0.03em; color: var(--ink-soft); margin: 0 0 18px; }
+    .pecas-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .peca-card { width: 150px; text-decoration: none; color: inherit; display: block; }
+    .peca-card .ph { width: 100%; aspect-ratio: 1/1; border: 1px solid var(--line); overflow: hidden; background: var(--accent-soft); }
+    .peca-card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .peca-card .peca-codigo { display: block; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 8px; }
+    .peca-card .peca-orgao { display: block; font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); }
   </style>
 
   <div class="crumb"><a href="/topicos/">Tópicos</a> › {entry.data.area} › {entry.data.titulo}</div>
@@ -82,6 +97,23 @@ const { Content } = await entry.render();
             <p class="cap-title">{img.titulo}</p>
             {img.observacao && <p class="cap-desc">{img.observacao}</p>}
           </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {pecasRelacionadas.length > 0 && (
+    <div class="pecas-relacionadas">
+      <h3>PEÇAS DO ACERVO RELACIONADAS</h3>
+      <div class="pecas-grid">
+        {pecasRelacionadas.map((p) => (
+          <a class="peca-card" href={`/pecas/${p.data.codigo}/`}>
+            <div class="ph">
+              {p.data.fotos && p.data.fotos[0] && <img src={p.data.fotos[0].arquivo} alt={p.data.codigo} />}
+            </div>
+            <span class="peca-codigo">{p.data.codigo}</span>
+            <span class="peca-orgao">{p.data.orgao}</span>
+          </a>
         ))}
       </div>
     </div>

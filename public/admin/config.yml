@@ -20,17 +20,17 @@ collections:
         name: "area"
         widget: "select"
         options:
+          - "Cardio Circulatório"
           - "Citopatologia"
           - "Endócrina"
           - "Ginecológica"
           - "Hematológica e Linfonodal"
           - "Hepatobiliar e Pâncreas"
-          - "Mama"
           - "Óssea e Partes Moles"
           - "Patologia Geral"
           - "Pele"
-          - "Pulmonar"
           - "Renal e Trato Urinário"
+          - "Respiratório"
           - "Sistema Nervoso"
           - "Trato Gastrointestinal"
       - { label: "Atualizado em", name: "atualizado", widget: "datetime" }
@@ -185,3 +185,47 @@ collections:
           - { label: "A Patologia — imagem de capa", name: "patologia_imagem", widget: "image", required: false }
           - { label: "A Patologia — legenda da imagem", name: "patologia_imagem_legenda", widget: "string", required: false }
           - { label: "Liga de Patologia — texto de introdução", name: "liga_texto", widget: "text", required: false, hint: "Se vazio, usa um texto padrão." }
+
+  # ===== NOVO: Museu da Patologia — cadastro de peças físicas =====
+  - name: "pecas_museu"
+    label: "Museu — Peças"
+    folder: "src/content/pecas_museu"
+    identifier_field: "codigo"
+    slug: "{{fields.codigo}}"
+    create: true
+    fields:
+      - { label: "Código da peça", name: "codigo", widget: "string", hint: "Gerado pela planilha do museu — ex: 01-COR-001. Copie exatamente daqui." }
+      - label: "Tópicos relacionados"
+        name: "topicos_relacionados"
+        widget: "relation"
+        collection: "topicos"
+        search_fields: ["titulo"]
+        value_field: "titulo"
+        display_fields: ["titulo"]
+        multiple: true
+        required: false
+        hint: "Um ou mais tópicos do portal ligados a esta peça."
+      - { label: "Órgão / estrutura", name: "orgao", widget: "string" }
+      - { label: "Descrição da peça", name: "descricao", widget: "text", required: false }
+      - { label: "Achado / patologia associada", name: "achado", widget: "text", required: false }
+      - { label: "Data de incorporação", name: "data_incorporacao", widget: "datetime", required: false }
+      - label: "Estado de conservação"
+        name: "estado_conservacao"
+        widget: "select"
+        options: ["Bom", "Regular", "Requer atenção"]
+        required: false
+      - { label: "Localização física", name: "localizacao_fisica", widget: "string", required: false }
+      - { label: "Observações", name: "observacoes", widget: "text", required: false }
+      - label: "Nº no Target"
+        name: "numero_target"
+        widget: "string"
+        required: false
+        hint: "Número físico na etiqueta da lâmina no sistema Target, quando houver. Ex: Lâmina 14."
+      - label: "Fotos"
+        name: "fotos"
+        widget: "list"
+        required: false
+        hint: "A primeira foto da lista vira a capa da peça no catálogo."
+        fields:
+          - { label: "Arquivo", name: "arquivo", widget: "image" }
+          - { label: "Legenda (opcional)", name: "legenda", widget: "string", required: false }

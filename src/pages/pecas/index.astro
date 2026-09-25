@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { AREAS } from '../../content/config';
+
+const pecas = await getCollection('pecas_museu');
+const topicosCol = await getCollection('topicos');
+const areaByTitulo = new Map(topicosCol.map((t) => [t.data.titulo, t.data.area]));
+
+// Agrupa: área -> Map(órgão -> contagem de peças)
+const porArea = new Map(AREAS.map((a) => [a, new Map()]));
+
+for (const p of pecas) {
+  const areasDaPeca = new Set();
+  for (const titulo of p.data.topicos_relacionados || []) {
+    const area = areaByTitulo.get(titulo);
+    if (area) areasDaPeca.add(area);
+  }
+  for (const area of areasDaPeca) {
+    const mapaOrgaos = porArea.get(area);
+    if (!mapaOrgaos) continue;
+    mapaOrgaos.set(p.data.orgao, (mapaOrgaos.get(p.data.orgao) || 0) + 1);
+  }
+}
+
+// Dados enxutos pra busca no cliente (código, nº no Target, órgão)
+const indiceBusca = pecas.map((p) => ({
+  codigo: p.data.codigo,
+  numeroTarget: p.data.numero_target || '',
+  orgao: p.data.orgao,
+  href: `/pecas/${p.data.codigo}/`
+}));
+
+// Ícones simples de linha, um por área — mesmo estilo do resto do site
+const ICONES: Record<string, string> = {
+  'Cardio Circulatório': '<path d="M12 20.5c-4.8-3.2-9-6.7-9-11A5 5 0 0 1 12 6.5 5 5 0 0 1 21 9.5c0 4.3-4.2 7.8-9 11Z"/>',
+  'Citopatologia': '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/>',
+  'Endócrina': '<path d="M12 3v3M12 3c-3 0-5 2.5-5 6 0 5 5 9 5 9s5-4 5-9c0-3.5-2-6-5-6Z"/>',
+  'Ginecológica': '<circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="21"/><line x1="8.5" y1="18" x2="15.5" y2="18"/>',
+  'Hematológica e Linfonodal': '<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/>',
+  'Hepatobiliar e Pâncreas': '<path d="M4 13c0-5 3.5-8 8-8s8 3 6 7-6 3-6 7c0 1.5-1.2 2.5-3 2.5C6.5 21.5 4 18 4 13Z"/>',
+  'Óssea e Partes Moles': '<path d="M6 6a2.5 2.5 0 1 1 3.8 2.1L14.2 12l4.4-4.4a2.5 2.5 0 1 1 1.8 1.8L16 14l4.1 4.1a2.5 2.5 0 1 1-1.8 1.8L14 15.8l-4.4 4.4a2.5 2.5 0 1 1-1.8-1.8L12 14 6.9 9.9A2.5 2.5 0 0 1 6 6Z"/>',
+  'Patologia Geral': '<circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/>',
+  'Pele': '<path d="M4 8c4-3 12-3 16 0M4 12c4-3 12-3 16 0M4 16c4-3 12-3 16 0"/>',
+  'Renal e Trato Urinário': '<path d="M9 4c-3 0-5 3-5 7s2 9 5 9c2 0 2.5-2 4-2s2 2 4 2c3 0 5-5 5-9s-2-7-5-7c-2 0-2.5 2-4 2S11 4 9 4Z"/>',
+  'Respiratório': '<path d="M12 3v7M12 10c-1 0-2 1-4 1s-3-1-3 3 1 7 3 7 2-2 2-4M12 10c1 0 2 1 4 1s3-1 3 3-1 7-3 7-2-2-2-4"/>',
+  'Sistema Nervoso': '<path d="M8 4a3 3 0 0 0-3 3v2a3 3 0 0 0 0 6v2a3 3 0 0 0 6 0V7a3 3 0 0 0-3-3ZM16 4a3 3 0 0 1 3 3v2a3 3 0 0 1 0 6v2a3 3 0 0 1-6 0V7a3 3 0 0 1 3-3Z"/>',
+  'Trato Gastrointestinal': '<path d="M5 4c0 3 4 2 4 5s-4 2-4 5 4 2 4 5M13 4c0 3 4 2 4 5s-4 2-4 5 4 2 4 5"/>'
+};
+---
+<Layout title="Museu da Patologia — Catálogo de Peças" backHref="/" backLabel="Voltar para Home">
+  <style>
+    .crumb { font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); margin-bottom: 18px; }
+    .crumb a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--line); }
+    h1 { font-family: var(--serif); font-weight: 700; font-size: 32px; line-height: 1.2; margin: 0 0 6px; }
+    .rule { width: 52px; height: 3px; background: var(--accent); margin: 0 0 10px; }
+    .sub { font-family: var(--sans); font-size: 13.5px; color: var(--ink-soft); max-width: 600px; margin: 0 0 26px; }
+
+    .busca-wrap { position: relative; max-width: 520px; margin-bottom: 30px; }
+    .busca-box { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); padding: 0 16px; height: 48px; }
+    .busca-box input { border: none; outline: none; flex: 1; font-family: var(--sans); font-size: 14px; background: transparent; }
+    .busca-resultados { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid var(--line); border-top: none; max-height: 320px; overflow-y: auto; z-index: 5; display: none; }
+    .busca-resultados.aberta { display: block; }
+    .busca-resultados a { display: block; padding: 10px 16px; font-family: var(--sans); font-size: 13.5px; color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); }
+    .busca-resultados a:hover { background: var(--accent-soft); }
+    .busca-resultados .cod { font-family: var(--mono); font-weight: 600; color: var(--accent); margin-right: 8px; }
+    .busca-vazia { padding: 14px 16px; font-family: var(--sans); font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+    .nav-label { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-soft); margin-bottom: 14px; }
+    .area-lista { display: flex; flex-direction: column; border-top: 1px solid var(--line); max-width: 640px; }
+    .area-item { border-bottom: 1px solid var(--line); }
+    .area-head { display: flex; align-items: center; gap: 12px; padding: 12px 4px; cursor: pointer; background: none; border: none; width: 100%; text-align: left; font: inherit; }
+    .area-head svg.icone { flex-shrink: 0; }
+    .area-head .nome { font-family: var(--sans); font-size: 14.5px; color: var(--ink); flex: 1; }
+    .area-head .vazia-label { font-family: var(--sans); font-size: 11px; color: var(--ink-soft); font-style: italic; }
+    .area-head svg.seta { flex-shrink: 0; transition: transform 0.15s; }
+    .area-item.aberta .area-head { background: var(--accent-soft); }
+    .area-item.aberta .area-head svg.seta { transform: rotate(180deg); }
+    .area-item.vazia { opacity: 0.5; }
+    .orgaos { display: none; flex-wrap: wrap; gap: 8px; padding: 12px 4px 16px 44px; }
+    .area-item.aberta .orgaos { display: flex; }
+    .orgao-chip { font-family: var(--sans); font-size: 12.5px; color: var(--accent); background: var(--accent-soft); padding: 5px 12px; border: 1px solid var(--line); text-decoration: none; }
+    .orgao-chip .n { opacity: 0.65; }
+  </style>
+
+  <div class="crumb"><a href="/">Home</a> › Museu da Patologia</div>
+  <h1>Catálogo de Peças</h1>
+  <div class="rule"></div>
+  <p class="sub">Encontre o código impresso na etiqueta da peça, ou navegue pelas áreas do portal.</p>
+
+  <div class="busca-wrap">
+    <div class="busca-box">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+      <input id="busca-input" type="text" placeholder="Buscar por código da peça ou nº da lâmina no Target" autocomplete="off" />
+    </div>
+    <div id="busca-resultados" class="busca-resultados"></div>
+  </div>
+
+  <div class="nav-label">NAVEGAR POR TÓPICO</div>
+  <div class="area-lista">
+    {AREAS.map((area) => {
+      const mapaOrgaos = porArea.get(area)!;
+      const vazia = mapaOrgaos.size === 0;
+      return (
+        <div class={`area-item${vazia ? ' vazia' : ''}`}>
+          <button class="area-head" type="button" disabled={vazia}>
+            <svg class="icone" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={ICONES[area]} />
+            <span class="nome">{area}</span>
+            {vazia
+              ? <span class="vazia-label">sem peças</span>
+              : <svg class="seta" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            }
+          </button>
+          {!vazia && (
+            <div class="orgaos">
+              {Array.from(mapaOrgaos.entries()).map(([orgao, n]) => (
+                <a class="orgao-chip" href={`/pecas/?orgao=${encodeURIComponent(orgao)}`}>
+                  {orgao} <span class="n">· {n}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+
+  <div id="resultados-organ"></div>
+
+  <script define:vars={{ indiceBusca }}>
+    const input = document.getElementById('busca-input');
+    const resultados = document.getElementById('busca-resultados');
+
+    input.addEventListener('input', () => {
+      const termo = input.value.trim().toLowerCase();
+      if (!termo) {
+        resultados.classList.remove('aberta');
+        resultados.innerHTML = '';
+        return;
+      }
+      const achados = indiceBusca.filter((p) =>
+        p.codigo.toLowerCase().includes(termo) ||
+        p.numeroTarget.toLowerCase().includes(termo)
+      ).slice(0, 20);
+
+      resultados.innerHTML = achados.length
+        ? achados.map((p) =>
+            `<a href="${p.href}"><span class="cod">${p.codigo}</span>${p.orgao}${p.numeroTarget ? ' — ' + p.numeroTarget : ''}</a>`
+          ).join('')
+        : '<div class="busca-vazia">Nenhuma peça encontrada com esse código.</div>';
+      resultados.classList.add('aberta');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!(e.target instanceof Node)) return;
+      if (!input.contains(e.target) && !resultados.contains(e.target)) {
+        resultados.classList.remove('aberta');
+      }
+    });
+
+    // Acordeão por área — clique alterna aberta/fechada
+    document.querySelectorAll('.area-head:not([disabled])').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.closest('.area-item').classList.toggle('aberta');
+      });
+    });
+
+    // Clique num chip de órgão: mostra a lista de peças daquele órgão,
+    // sem navegar pra outra página (só troca a URL pra permitir voltar/compartilhar).
+    document.querySelectorAll('.orgao-chip').forEach((chip) => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = new URL(chip.href);
+        const orgao = url.searchParams.get('orgao');
+        history.pushState({}, '', url);
+        mostrarPecasDoOrgao(orgao);
+      });
+    });
+
+    function mostrarPecasDoOrgao(orgao) {
+      const painel = document.getElementById('resultados-organ');
+      const pecas = indiceBusca.filter((p) => p.orgao === orgao);
+      if (!pecas.length) { painel.innerHTML = ''; return; }
+      painel.innerHTML = `
+        <div class="nav-label" style="margin-top:30px">PEÇAS — ${orgao.toUpperCase()}</div>
+        <div class="area-lista">
+          ${pecas.map((p) => `<a href="${p.href}" style="display:flex;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;font-family:var(--sans);font-size:14px">
+            <span><span style="font-family:var(--mono);font-weight:600;color:var(--accent);margin-right:10px">${p.codigo}</span>${p.numeroTarget || ''}</span>
+          </a>`).join('')}
+        </div>`;
+    }
+
+    const orgaoInicial = new URLSearchParams(window.location.search).get('orgao');
+    if (orgaoInicial) mostrarPecasDoOrgao(orgaoInicial);
+  </script>
+</Layout>

@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const pecas = await getCollection('pecas_museu');
+  return pecas.map((entry) => ({
+    params: { codigo: entry.data.codigo },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const topicosCol = await getCollection('topicos');
+const topicosRelacionados = topicosCol.filter((t) =>
+  (entry.data.topicos_relacionados || []).includes(t.data.titulo)
+);
+
+const fotos = entry.data.fotos || [];
+const capa = fotos[0];
+const galeria = fotos.slice(1);
+---
+<Layout title={`Peça ${entry.data.codigo}`} backHref="/pecas/" backLabel="Voltar para o Museu">
+  <style>
+    .crumb { font-family: var(--sans); font-size: 12.5px; color: var(--ink-soft); margin-bottom: 18px; }
+    .crumb a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--line); }
+    h1 { font-family: var(--mono); font-weight: 700; font-size: 30px; margin: 0 0 6px; }
+    .orgao-sub { font-family: var(--sans); font-size: 15px; color: var(--ink-soft); margin: 0 0 26px; }
+
+    .capa { width: 100%; max-width: 420px; aspect-ratio: 1/1; border: 1px solid var(--line); overflow: hidden; margin-bottom: 22px; background: var(--accent-soft); }
+    .capa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .galeria { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+    .galeria .ph { width: 100px; height: 100px; border: 1px solid var(--line); overflow: hidden; }
+    .galeria .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .ficha { display: grid; grid-template-columns: 150px 1fr; row-gap: 14px; column-gap: 12px; font-family: var(--sans); font-size: 14px; margin-bottom: 30px; max-width: 620px; }
+    .ficha dt { color: var(--ink-soft); font-weight: 600; }
+    .ficha dd { margin: 0; }
+    .ficha dd.mono { font-family: var(--mono); background: var(--accent-soft); display: inline-block; padding: 2px 8px; width: fit-content; }
+
+    .desc-block { max-width: 68ch; font-size: 15.5px; line-height: 1.68; margin: 0 0 30px; }
+    .desc-block h3 { font-family: var(--sans); font-weight: 600; font-size: 12.5px; letter-spacing: 0.03em; color: var(--ink-soft); margin: 0 0 8px; }
+
+    .topicos-rel { padding-top: 22px; margin-top: 10px; border-top: 1px solid var(--line); }
+    .topicos-rel h3 { font-family: var(--sans); font-weight: 600; font-size: 12.5px; letter-spacing: 0.03em; color: var(--ink-soft); margin: 0 0 14px; }
+    .topicos-rel .pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .topicos-rel a { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 6px 14px; text-decoration: none; }
+  </style>
+
+  <div class="crumb"><a href="/pecas/">Museu da Patologia</a> › {entry.data.codigo}</div>
+
+  <h1>{entry.data.codigo}</h1>
+  <p class="orgao-sub">{entry.data.orgao}</p>
+
+  {capa && (
+    <div class="capa"><img src={capa.arquivo} alt={capa.legenda || entry.data.codigo} /></div>
+  )}
+
+  {galeria.length > 0 && (
+    <div class="galeria">
+      {galeria.map((f) => (
+        <div class="ph"><img src={f.arquivo} alt={f.legenda || entry.data.codigo} /></div>
+      ))}
+    </div>
+  )}
+
+  <dl class="ficha">
+    {entry.data.numero_target && (<><dt>Nº no Target</dt><dd class="mono">{entry.data.numero_target}</dd></>)}
+    <dt>Órgão / estrutura</dt><dd>{entry.data.orgao}</dd>
+    {entry.data.data_incorporacao && (<><dt>Data de incorporação</dt><dd>{entry.data.data_incorporacao.toLocaleDateString('pt-BR')}</dd></>)}
+    {entry.data.estado_conservacao && (<><dt>Estado de conservação</dt><dd>{entry.data.estado_conservacao}</dd></>)}
+    {entry.data.localizacao_fisica && (<><dt>Localização física</dt><dd>{entry.data.localizacao_fisica}</dd></>)}
+  </dl>
+
+  {entry.data.descricao && (
+    <div class="desc-block">
+      <h3>DESCRIÇÃO</h3>
+      <p>{entry.data.descricao}</p>
+    </div>
+  )}
+
+  {entry.data.achado && (
+    <div class="desc-block">
+      <h3>ACHADO / PATOLOGIA ASSOCIADA</h3>
+      <p>{entry.data.achado}</p>
+    </div>
+  )}
+
+  {entry.data.observacoes && (
+    <div class="desc-block">
+      <h3>OBSERVAÇÕES</h3>
+      <p>{entry.data.observacoes}</p>
+    </div>
+  )}
+
+  <Content />
+
+  {topicosRelacionados.length > 0 && (
+    <div class="topicos-rel">
+      <h3>TÓPICOS DO PORTAL RELACIONADOS</h3>
+      <div class="pills">
+        {topicosRelacionados.map((t) => (
+          <a href={`/topicos/${t.slug}/`}>{t.data.titulo}</a>
+        ))}
+      </div>
+    </div>
+  )}
+</Layout>
