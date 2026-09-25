@@ -1,6 +1,6 @@
 ---
 titulo: Fibroadenoma de Mama
-area: Mama
+area: Ginecológica
 atualizado: 2026-09-18T17:00:00.000-03:00
 intro: >-
   O tumor benigno mais comum da mama em mulheres jovens — descrito classicamente
