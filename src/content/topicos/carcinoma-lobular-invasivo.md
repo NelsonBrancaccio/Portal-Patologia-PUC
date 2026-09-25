@@ -1,6 +1,6 @@
 ---
 titulo: Carcinoma Lobular Invasivo
-area: Mama
+area: Ginecológica
 atualizado: 2026-09-17T13:50:00.000-03:00
 intro: >-
   O segundo tipo mais comum de câncer de mama invasivo — e um dos mais difíceis
