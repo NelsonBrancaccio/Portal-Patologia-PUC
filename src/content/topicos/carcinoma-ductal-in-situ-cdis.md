@@ -1,6 +1,6 @@
 ---
 titulo: Carcinoma Ductal In Situ (CDIS)
-area: Mama
+area: Ginecológica
 atualizado: 2026-09-23T16:27:00.000-03:00
 intro: >-
   Um câncer de mama que, por definição, ainda não é invasivo — a diferença entre
